@@ -13,7 +13,7 @@ document.querySelector('#isHardMode').checked = Settings.isHardMode;
 document.querySelector('#primaryTarget').value = Settings.primaryTarget;
 
 
-Counter = {
+const Counter = {
   targetsData: {},
   secondaryTargetsOrder: [],
   targetsData: {},
