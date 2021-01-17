@@ -99,12 +99,12 @@ const SettingProxy = function () {
 // General settings
 const Settings = SettingProxy.createSettingProxy('main');
 Object.entries({
-  isHardMode: { default: 0 },
-  amountOfPlayers: { default: 2 },
+  isHardMode: { default: false },
+  amountOfPlayers: { default: '2' },
   primaryTarget: { default: 'pink_diamond' },
-  gold: { default: 1 },
-  cocaine: { default: 1 },
-  cash: { default: 1 },
-  paintings: { default: 1 },
-  weed: { default: 1 },
+  gold: { default: '1' },
+  cocaine: { default: '1' },
+  cash: { default: '1' },
+  paintings: { default: '1' },
+  weed: { default: '1' },
 }).forEach(([name, config]) => SettingProxy.addSetting(Settings, name, config));

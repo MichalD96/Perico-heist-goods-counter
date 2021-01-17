@@ -1,3 +1,18 @@
+const htmlElements = {
+  gold: document.querySelector('#gold'),
+  weed: document.querySelector('#weed'),
+  cash: document.querySelector('#cash'),
+  cocaine: document.querySelector('#cocaine'),
+  paintings: document.querySelector('#paintings'),
+  amountOfPlayers: document.querySelector('#amountOfPlayers'),
+}
+Object.entries(htmlElements).forEach(([setting, elementHTML]) => {
+  elementHTML.value = Settings[setting];
+});
+document.querySelector('#isHardMode').checked = Settings.isHardMode;
+document.querySelector('#primaryTarget').value = Settings.primaryTarget;
+
+
 class Counter {
   static targetsData = {};
   static secondaryTargetsOrder = [];
@@ -52,19 +67,18 @@ class Counter {
     });
   }
   static activateHandlers() {
-    const htmlElements = {
-      gold: document.querySelector('#gold'),
-      weed: document.querySelector('#weed'),
-      cash: document.querySelector('#cash'),
-      cocaine: document.querySelector('#cocaine'),
-      paintings: document.querySelector('#paintings'),
-      primaryTarget: document.querySelector('#primaryTarget'),
-      amountOfPlayers: document.querySelector('#amountOfPlayers'),
-      isHardMode: document.querySelector('#isHardMode'),
-    }
+    const isHardMode = document.querySelector('#isHardMode');
+    const primaryTarget = document.querySelector('#primaryTarget');
+    isHardMode.addEventListener('change', () => {
+      Settings.isHardMode = isHardMode.checked;
+    });
+    primaryTarget.addEventListener('change', () => {
+      Settings.primaryTarget = primaryTarget.value;
+    });
+
     Object.values(htmlElements).forEach(element => {
       element.addEventListener('change', event => {
-        Settings[event.target.id] = +event.target.value;
+        Settings[event.currentTarget.id] = event.target.value;
       });
     });
 
