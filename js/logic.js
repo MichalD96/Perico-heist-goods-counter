@@ -13,12 +13,12 @@ document.querySelector('#isHardMode').checked = Settings.isHardMode;
 document.querySelector('#primaryTarget').value = Settings.primaryTarget;
 
 
-class Counter {
-  static targetsData = {};
-  static secondaryTargetsOrder = [];
-  static targetsData = {};
+Counter = {
+  targetsData: {},
+  secondaryTargetsOrder: [],
+  targetsData: {},
 
-  static init() {
+  init: function () {
     Counter.activateHandlers();
     Loader.promises['targets'].execute(data => {
       Counter.targetsData = data;
@@ -32,8 +32,8 @@ class Counter {
       });
       Counter.getLoot();
     });
-  }
-  static getLoot() {
+  },
+  getLoot: function () {
     let amounts = [];
     let bagsFill = 0;
     let emptySpace = 1;
@@ -56,8 +56,8 @@ class Counter {
       totalValue += realFill * obj.value;
     });
     Counter.updateWebsite(amounts, totalValue + Counter.targetsData.targets.primary[isHardMode].find(e => e.name === Settings.primaryTarget).value);
-  }
-  static updateWebsite(amounts, totalValue) {
+  },
+  updateWebsite: function (amounts, totalValue) {
     document.querySelector('#max-loot-value').innerHTML = totalValue.toLocaleString();
     document.querySelectorAll('.big').forEach(e => {
       e.innerHTML = 0;
@@ -65,8 +65,8 @@ class Counter {
     amounts.forEach(object => {
       document.querySelector(`#${object.name}-bag`).innerHTML = object.amount;
     });
-  }
-  static activateHandlers() {
+  },
+  activateHandlers: function () {
     const isHardMode = document.querySelector('#isHardMode');
     const primaryTarget = document.querySelector('#primaryTarget');
     isHardMode.addEventListener('change', () => {
