@@ -45,7 +45,7 @@ Counter = {
       if (emptySpace <= 0) return;
       emptySpace = players - bagsFill;
       const obj = Counter.targetsData.targets.secondary.find(object => object.name === element.name);
-      if (players === 1 && obj.name === 'gold') return;
+      if (players == 1 && obj.name === 'gold') return;
       if (obj.name === 'paintings' && emptySpace < .5) return;
       const maxFill = Settings[obj.name] * obj.weight;
       let realFill = maxFill >= players ? players : maxFill;
