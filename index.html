@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cayo Perico Heist Loot Value Counter</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <label for="isHardMode">Hard mode: </label>
+  <input type="checkbox" value="0" id="isHardMode">
+  <br>
+  <br>
+  <div class="input-container">
+    <label for="primaryTarget">Main Target</label><br>
+    <select class="input-text" id="primaryTarget">
+      <option value="tequila">Tequila</option>
+      <option value="ruby_necklace">Ruby Necklace</option>
+      <option value="bearer_bonds">Bearer Bonds</option>
+      <option value="pink_diamond" selected>Pink diamond</option>
+    </select>
+  </div>
+  <br>
+  <div class="input-container">
+    <label for="amountOfPlayers">Amount of players</label><br>
+    <select class="input-text" id="amountOfPlayers">
+      <option value="1">1</option>
+      <option value="2"selected>2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+  </div>
+  <br>
+
+  <div>
+    <label for="gold">Gold stacks:</label><br>
+    <input type="number" id="gold" name="gold" value="1">
+  </div>
+  <br>
+
+  <div>
+    <label for="weed">Weed stacks:</label><br>
+    <input type="number" id="weed" name="weed" value="1">
+  </div>
+  <br>
+
+  <div>
+    <label for="cocaine">Cocaine stacks:</label><br>
+    <input type="number" id="cocaine" name="cocaine" value="1">
+  </div>
+  <br> 
+  <div>
+    <label for="cash">Cash stacks:</label><br>
+    <input type="number" id="cash" name="cash" value="1">
+  </div>
+  <br> 
+  <div>
+    <label for="paintings">Paintings:</label><br>
+    <input type="number" id="paintings" name="paintings" value="1">
+  </div>
+  <br>
+  <br>
+  <div>Max possible loot value: $<span id="max-loot-value"></span></div>
+  <br>
+  <br>
+  <div>You can take:</div>
+  <div><span class="big" id="gold-bag">0</span> gold bag(s)</div>
+  <div><span class="big" id="weed-bag">0</span> weed bag(s)</div>
+  <div><span class="big" id="cocaine-bag">0</span> cocaine bag(s)</div>
+  <div><span class="big" id="cash-bag">0</span> cash bag(s)</div>
+  <div><span class="big" id="paintings-bag">0</span> paintings bag(s)</div>
+
+  <script src="js/loader.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/logic.js"></script>
+</body>
+</html>
