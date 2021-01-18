@@ -35,22 +35,22 @@ const Counter = {
   getLoot: function () {
     let amounts = [];
     let bagsFill = 0;
-    let emptySpace = 1;
+    let emptySpace = Settings.amountOfPlayers;
     let totalValue = 0;
     const isHardMode = (Settings.isHardMode ? 'hard_mode' : 'easy_mode');
     const players = Settings.amountOfPlayers;
 
     Counter.secondaryTargetsOrder.forEach(element => {
-      if (emptySpace <= 0) return;
+      if (emptySpace < .1) return;
       emptySpace = players - bagsFill;
       const obj = Counter.targetsData.targets.secondary.find(object => object.name === element.name);
       if (players == 1 && obj.name === 'gold') return;
       if (obj.name === 'paintings' && emptySpace < .5) return;
       const maxFill = Settings[obj.name] * obj.weight;
       let realFill = maxFill >= players ? players : maxFill;
-      bagsFill += realFill;
+      bagsFill += +realFill;
       realFill = realFill > emptySpace ? emptySpace : realFill;
-      if (realFill <= 0.1) return;
+      if (realFill < 0.1) return;
       amounts.push({ name: obj.name, amount: realFill });
       totalValue += realFill * obj.value;
     });
