@@ -35,8 +35,8 @@ body {
 }
 
 .custom-input select, .custom-input input, .custom-input label {
-  width: 120px;
-  margin-right: 10px;
+  width: 130px;
+  margin-right: 25px;
 }
 
 .main-container .right {
