@@ -4,6 +4,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  user-select: none;
 }
 
 .big {
@@ -17,7 +18,7 @@ body {
 
 .main-container {
   display: grid;
-  width: 350px;
+  width: 360px;
   height: 100%;
   align-items: center;
   align-content: center;
