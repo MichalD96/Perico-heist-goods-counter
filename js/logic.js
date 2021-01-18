@@ -16,7 +16,6 @@ document.querySelector('#primaryTarget').value = Settings.primaryTarget;
 const Counter = {
   targetsData: {},
   secondaryTargetsOrder: [],
-  targetsData: {},
 
   init: function () {
     Counter.activateHandlers();
@@ -59,7 +58,7 @@ const Counter = {
     Counter.updateWebsite(amounts, finalValue);
   },
   updateWebsite: function (amounts, totalValue) {
-    document.querySelector('#max-loot-value').innerHTML = totalValue.toLocaleString();
+    document.querySelector('#max-loot-value').innerHTML = Math.round(totalValue).toLocaleString();
     document.querySelectorAll('.big').forEach(e => {
       e.innerHTML = 0;
     });

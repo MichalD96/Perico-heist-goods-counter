@@ -1,9 +1,69 @@
-* {
+*, *::before, *::after{
   background-color: #1a1a1a;
   color:white;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 .big {
   font-size: 1.4rem;
   color: red;
+}
+
+body {
+  margin: 10px;
+}
+
+.main-container {
+  display: grid;
+  width: 350px;
+  height: 100%;
+  align-items: center;
+  align-content: center;
+  margin: 25px auto;
+}
+
+.custom-input {
+  display: flex;
+  margin: auto;
+  width: 100%;
+  height: 2.5rem;
+  align-items: center;
+  align-content: center;
+}
+
+.custom-input select, .custom-input input, .custom-input label {
+  width: 120px;
+  margin-right: 10px;
+}
+
+.main-container .right {
+  display: flex;
+  font-size: 1.5rem;
+  align-items: center;
+  align-content: center;
+}
+
+.main-container .right {
+  margin: auto 10px;
+}
+
+
+#max-loot-value {
+  color: greenyellow;
+}
+
+#max-loot-value::before {
+  content: '$';
+  color: greenyellow;
+}
+
+hr {
+  margin: 10px 0;
+}
+
+a, a:visited {
+  color: white;
+  text-decoration: none;
 }
