@@ -1,4 +1,4 @@
-const SettingProxy = function () {
+const SettingProxy = (function () {
   'use strict';
   const _domain = Symbol('domain');
   const _proxyConfig = Symbol('proxyConfig');
@@ -94,7 +94,7 @@ const SettingProxy = function () {
       return callback;
     },
   };
-}();
+})();
 
 // General settings
 const Settings = SettingProxy.createSettingProxy('main');
