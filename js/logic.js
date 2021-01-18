@@ -22,7 +22,7 @@ const Counter = {
     Loader.promises['targets'].execute(data => {
       Counter.targetsData = data;
       Counter.targetsData.targets.secondary.forEach(({ name, value, weight }) => {
-        const profit = value / weight;
+        const profit = Math.round(value / weight);
         Counter.secondaryTargetsOrder.push({ name, bag_profit: profit })
       });
       Counter.secondaryTargetsOrder.sort((...args) => {
