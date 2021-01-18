@@ -55,7 +55,8 @@ const Counter = {
       amounts.push({ name: obj.name, amount: realFill });
       totalValue += realFill * obj.value;
     });
-    Counter.updateWebsite(amounts, totalValue + Counter.targetsData.targets.primary[isHardMode].find(e => e.name === Settings.primaryTarget).value);
+    const finalValue = totalValue + Counter.targetsData.targets.primary[isHardMode].find(e => e.name === Settings.primaryTarget).value;
+    Counter.updateWebsite(amounts, finalValue);
   },
   updateWebsite: function (amounts, totalValue) {
     document.querySelector('#max-loot-value').innerHTML = totalValue.toLocaleString();
@@ -63,7 +64,7 @@ const Counter = {
       e.innerHTML = 0;
     });
     amounts.forEach(object => {
-      document.querySelector(`#${object.name}-bag`).innerHTML = object.amount;
+      document.querySelector(`#${object.name}-bag`).innerHTML = Number(object.amount).toFixed(1);
     });
   },
   activateHandlers: function () {
