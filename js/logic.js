@@ -18,8 +18,7 @@ const Counter = {
   secondaryTargetsOrder: [],
 
   init: function () {
-    Counter.activateHandlers();
-    Loader.promises['targets'].execute(data => {
+    return Loader.promises['targets'].execute(data => {
       Counter.targetsData = data;
       Counter.targetsData.targets.secondary.forEach(({ name, value, weight }) => {
         const profit = Math.round(value / weight);
@@ -67,12 +66,10 @@ const Counter = {
     });
   },
   activateHandlers: function () {
-    const isHardMode = document.querySelector('#isHardMode');
-    const primaryTarget = document.querySelector('#primaryTarget');
-    isHardMode.addEventListener('change', () => {
+    document.querySelector('#isHardMode').addEventListener('change', () => {
       Settings.isHardMode = isHardMode.checked;
     });
-    primaryTarget.addEventListener('change', () => {
+    document.querySelector('#primaryTarget').addEventListener('change', () => {
       Settings.primaryTarget = primaryTarget.value;
     });
 
@@ -86,4 +83,22 @@ const Counter = {
   }
 }
 
-document.addEventListener('DOMContentLoaded', Counter.init);
+const findError = callback => (...args) => callback(args).catch(err => console.log(err));
+
+function initLogic() {
+  const initCounter = Counter.init();
+
+  Promise.all([initCounter])
+    .then(Counter.activateHandlers)
+    .then(Loader.resolveContentLoaded);
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  try {
+    initLogic();
+  }
+  catch (error) {
+    console.log(error);
+    alert(error);
+  }
+});
