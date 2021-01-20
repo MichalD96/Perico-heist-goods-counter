@@ -107,4 +107,23 @@ Object.entries({
   cash: { default: '1' },
   paintings: { default: '0' },
   weed: { default: '1' },
-}).forEach(([name, config]) => SettingProxy.addSetting(Settings, name, config));
+})
+  .forEach(([name, config]) => {
+    SettingProxy.addSetting(Settings, name, config);
+
+    // Search query settings:
+    const settingValue = getParameterByName(name);
+    if (!['', null, []].includes(settingValue))
+      Settings[name] = settingValue;
+  });
+
+
+function getParameterByName(name, url) {
+  if (!url) url = window.location.href;
+  name = name.replace(/[\[\]]/g, '\\$&');
+  const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+    results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
