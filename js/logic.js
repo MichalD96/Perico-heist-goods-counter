@@ -7,7 +7,7 @@ const htmlElements = {
   amountOfPlayers: document.querySelector('#amountOfPlayers'),
 }
 Object.entries(htmlElements).forEach(([setting, elementHTML]) => {
-  elementHTML.value = Settings[setting];
+  elementHTML.value = +Settings[setting];
 });
 document.querySelector('#isHardMode').checked = Settings.isHardMode;
 document.querySelector('#primaryTarget').value = Settings.primaryTarget;
@@ -67,7 +67,7 @@ const Counter = {
   },
   activateHandlers: function () {
     document.querySelector('#isHardMode').addEventListener('change', () => {
-      Settings.isHardMode = isHardMode.checked;
+      Settings.isHardMode = !!isHardMode.checked;
     });
     document.querySelector('#primaryTarget').addEventListener('change', () => {
       Settings.primaryTarget = primaryTarget.value;
@@ -75,7 +75,7 @@ const Counter = {
 
     Object.values(htmlElements).forEach(element => {
       element.addEventListener('change', event => {
-        Settings[event.currentTarget.id] = event.target.value;
+        Settings[event.currentTarget.id] = +event.target.value;
       });
     });
 

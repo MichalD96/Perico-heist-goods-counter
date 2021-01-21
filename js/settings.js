@@ -86,7 +86,8 @@ const SettingProxy = (function () {
     },
     addListener: function (settingProxy, names, callback) {
       const proxyConfig = settingProxy[_proxyConfig];
-      names.split(' ').forEach(name => {
+      names = Array.isArray(names) ? names : names.split(' ');
+      names.forEach(name => {
         settingHandler
           ._checkAndGetSettingConfig(proxyConfig, name, ReferenceError)
           .listeners.push(callback);
@@ -100,20 +101,20 @@ const SettingProxy = (function () {
 const Settings = SettingProxy.createSettingProxy('main');
 Object.entries({
   isHardMode: { default: false },
-  amountOfPlayers: { default: '2' },
+  amountOfPlayers: { default: 2 },
   primaryTarget: { default: 'pink_diamond' },
-  gold: { default: '1' },
-  cocaine: { default: '1' },
-  cash: { default: '1' },
-  paintings: { default: '0' },
-  weed: { default: '1' },
+  gold: { default: 1 },
+  cocaine: { default: 1 },
+  cash: { default: 1 },
+  paintings: { default: 1 },
+  weed: { default: 1 },
 })
   .forEach(([name, config]) => {
     SettingProxy.addSetting(Settings, name, config);
 
     // Search query settings:
     const settingValue = getParameterByName(name);
-    if (!['', null, []].includes(settingValue))
+    if (!['', null, '[]', '&', '/'].includes(settingValue))
       Settings[name] = settingValue;
   });
 
@@ -127,3 +128,4 @@ function getParameterByName(name, url) {
   if (!results[2]) return '';
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
+
