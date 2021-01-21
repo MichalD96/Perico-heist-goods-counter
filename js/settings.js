@@ -132,7 +132,7 @@ function getParameterByName(name, url) {
 function generateSearchQuery() {
   let base = '';
   Object.entries(localStorage).forEach(([key, value]) => {
-    base += `${key.substring(5, key.length)}=${JSON.parse(value)}&`;
+    base += `${key.substring(key.lastIndexOf('.') + 1, key.length)}=${JSON.parse(value)}&`;
   });
   return (`https://michald96.github.io/Perico-heist-goods-counter/?${base}`).replace(/&$/, '');
 }
