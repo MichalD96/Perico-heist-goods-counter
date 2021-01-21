@@ -129,3 +129,10 @@ function getParameterByName(name, url) {
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
+function generateSearchQuery() {
+  let base = '';
+  Object.entries(localStorage).forEach(([key, value]) => {
+    base += `${key.substring(5, key.length)}=${JSON.parse(value)}&`;
+  });
+  return (`https://michald96.github.io/Perico-heist-goods-counter/?${base}`).replace(/&$/, '');
+}
