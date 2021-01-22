@@ -60,9 +60,15 @@ const Counter = {
     document.querySelector('#max-loot-value').innerHTML = Math.round(totalValue).toLocaleString();
     document.querySelectorAll('.big').forEach(e => {
       e.innerHTML = 0;
+      e.parentElement.classList.add("hidden");
     });
     amounts.forEach(object => {
-      document.querySelector(`#${object.name}-bag`).innerHTML = Number(object.amount).toFixed(1);
+      const amount = Number(object.amount).toFixed(1);
+      const element = document.querySelector(`#${object.name}-bag`)
+      if (amount !== 0) {
+        element.innerHTML = amount
+        element.parentElement.classList.remove("hidden");
+      }
     });
   },
   activateHandlers: function () {

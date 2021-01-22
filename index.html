@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cayo Perico Heist Loot Value Counter</title>
+  <!-- <link rel="stylesheet" href="css/styles_map.css?nocache=1000" /> -->
   <link rel="stylesheet" href="css/style.css?nocache=1000" />
 
   <script>
@@ -17,11 +18,13 @@
   <h3>Created by: <a href="https://github.com/MichalD96" target="_blank">Michal__d</a></h3>
   <br>
   <h5>Site build in progress ;)</h5>
+
   <div class="main-container">
     <div class="custom-input">
       <label for="isHardMode">Hard mode: </label>
       <input type="checkbox" checked="0" id="isHardMode">
     </div>
+
     <div class="custom-input">
       <label for="primaryTarget">Main Target</label>
       <select class="input-text" id="primaryTarget">
@@ -72,11 +75,11 @@
     <div>Max possible loot value: <span id="max-loot-value"></span></div>
     <hr>
     <div>You can take (in profit order):</div>
-    <div><span class="big" id="gold-bag">0</span><span> gold bag(s)</span></div>
-    <div><span class="big" id="weed-bag">0</span><span> weed bag(s)</span></div>
-    <div><span class="big" id="cocaine-bag">0</span><span> cocaine bag(s)</span></div>
-    <div><span class="big" id="paintings-bag">0</span><span> paintings bag(s)</span></div>
-    <div><span class="big" id="cash-bag">0</span><span> cash bag(s)</span></div>
+    <div class="hidden"><span class="big" id="gold-bag">0</span><span> gold bag(s)</span></div>
+    <div class="hidden"><span class="big" id="weed-bag">0</span><span> weed bag(s)</span></div>
+    <div class="hidden"><span class="big" id="cocaine-bag">0</span><span> cocaine bag(s)</span></div>
+    <div class="hidden"><span class="big" id="paintings-bag">0</span><span> paintings bag(s)</span></div>
+    <div class="hidden"><span class="big" id="cash-bag">0</span><span> cash bag(s)</span></div>
   </div>
 
   <script src="js/loader.js?nocache=1000"></script>

@@ -1,10 +1,28 @@
-*, *::before, *::after{
+*,
+*::before,
+*::after {
   background-color: #1a1a1a;
-  color:white;
+  color: white;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   user-select: none;
+}
+
+@font-face {
+  font-family: Hapna;
+  src: url(../assets/fonts/hapna.woff2) format("woff2"), url(../assets/fonts/hapna.woff) format("woff"), url(../assets/fonts/hapna.ttf) format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+}
+
+@font-face {
+  font-family: RDRLino;
+  src: url(../assets/fonts/RDRLino-Regular.woff2) format("woff2"), url(../assets/fonts/RDRLino-Regular.woff) format("woff"), url(../assets/fonts/RDRLino-Regular.ttf) format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
 }
 
 .big {
@@ -14,6 +32,7 @@
 
 body {
   margin: 10px;
+  font-family: Hapna, serif;
 }
 
 .main-container {
@@ -34,9 +53,11 @@ body {
   align-content: center;
 }
 
-.custom-input select, .custom-input input, .custom-input label {
-  width: 130px;
-  margin-right: 25px;
+.custom-input select,
+.custom-input input,
+.custom-input label {
+  width: 150px;
+  margin-right: 20px;
 }
 
 .main-container .right {
@@ -64,7 +85,72 @@ hr {
   margin: 10px 0;
 }
 
-a, a:visited {
+a,
+a:visited {
   color: white;
   text-decoration: none;
+}
+
+.hidden {
+  display: none !important;
+  user-select: none;
+}
+
+input,
+select {
+  outline: none;
+  border: none;
+  width: 100%;
+  background-color: #222;
+  border: none;
+  padding: 4px 10px;
+  color: #f0f0f0;
+  font-size: 12px;
+  height: 70%;
+  border-radius: 3px;
+  margin-left: 6px;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.input-container label {
+  line-height: 24px;
+  width: 100%;
+  text-align: left;
+}
+
+.input-checkbox-wrapper {
+  display: inline-block;
+  min-width: 28px;
+  height: 28px;
+  margin-left: 6px;
+}
+
+.input-checkbox-wrapper .input-checkbox {
+  display: none;
+}
+
+.input-checkbox-wrapper .input-checkbox-label {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-image: url(../assets/selection_boxes.png);
+  background-position: left center;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  cursor: pointer !important;
+}
+
+.input-checkbox-wrapper .input-checkbox:checked+.input-checkbox-label {
+  background-position: right center;
+}
+
+.input-checkbox-wrapper .input-checkbox:disabled+.input-checkbox-label {
+  cursor: not-allowed !important;
+}
+
+.input-checkbox-wrapper .input-checkbox+.input-checkbox-label,
+.input-text,
+.input-action {
+  margin-top: 5px;
 }
