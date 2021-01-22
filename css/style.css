@@ -87,7 +87,7 @@ hr {
 
 a,
 a:visited {
-  color: white;
+  color: rgb(0, 153, 255);
   text-decoration: none;
 }
 
@@ -153,4 +153,18 @@ select {
 .input-text,
 .input-action {
   margin-top: 5px;
+}
+
+#donate {
+  margin: 5px 0 10 0;
+  display: flex;
+  justify-content: space-between;
+  background-image: url(../assets/menu_donate.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  padding: 10px;
+}
+
+.donate-form .input-text {
+  margin: auto 0 auto auto;
 }
