@@ -26,7 +26,7 @@ const Counter = {
       });
       Counter.secondaryTargetsOrder.sort((...args) => {
         const [a, b] = args.map(({ bag_profit }) => bag_profit);
-        return a < b;
+        return b - a;
       });
       Counter.getLoot();
     });
