@@ -103,11 +103,11 @@ Object.entries({
   isHardMode: { default: false },
   amountOfPlayers: { default: 2 },
   primaryTarget: { default: 'pink_diamond' },
-  gold: { default: 1 },
-  cocaine: { default: 1 },
-  cash: { default: 1 },
-  paintings: { default: 1 },
-  weed: { default: 1 },
+  gold: { default: 0 },
+  cocaine: { default: 0 },
+  cash: { default: 0 },
+  paintings: { default: 0 },
+  weed: { default: 0 },
 })
   .forEach(([name, config]) => {
     SettingProxy.addSetting(Settings, name, config);
