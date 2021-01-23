@@ -21,8 +21,7 @@ const Counter = {
     return Loader.promises['targets'].execute(data => {
       Counter.targetsData = data;
       Counter.targetsData.targets.secondary.forEach(({ name, value, weight }) => {
-        const profit = Math.round(value / weight);
-        Counter.secondaryTargetsOrder.push({ name, bag_profit: profit })
+        Counter.secondaryTargetsOrder.push({ name, bag_profit: value / weight })
       });
       Counter.secondaryTargetsOrder.sort((...args) => {
         const [a, b] = args.map(({ bag_profit }) => bag_profit);
@@ -43,7 +42,7 @@ const Counter = {
       if (emptySpace < .1) return;
       emptySpace = players - bagsFill;
       const obj = Counter.targetsData.targets.secondary.find(object => object.name === element.name);
-      if (players == 1 && obj.name === 'gold') return;
+      // if (players == 1 && obj.name === 'gold') return;
       if (obj.name === 'paintings' && emptySpace < .5) return;
       const maxFill = Settings[obj.name] * obj.weight;
       let realFill = maxFill >= players ? players : maxFill;
@@ -51,7 +50,7 @@ const Counter = {
       realFill = realFill > emptySpace ? emptySpace : realFill;
       if (realFill < 0.1) return;
       amounts.push({ name: obj.name, amount: realFill });
-      totalValue += realFill * obj.value;
+      totalValue += realFill * (obj.value / obj.weight);
     });
     const finalValue = totalValue + Counter.targetsData.targets.primary[isHardMode].find(e => e.name === Settings.primaryTarget).value;
     Counter.updateWebsite(amounts, finalValue);
@@ -66,7 +65,7 @@ const Counter = {
       const amount = Number(object.amount).toFixed(1);
       const element = document.querySelector(`#${object.name}-bag`)
       if (amount !== 0) {
-        element.innerHTML = amount
+        element.innerHTML = amount;
         element.parentElement.classList.remove("hidden");
       }
     });
