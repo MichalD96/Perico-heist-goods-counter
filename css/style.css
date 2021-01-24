@@ -168,3 +168,10 @@ select {
 .donate-form .input-text {
   margin: auto 0 auto auto;
 }
+
+input[type="number"] {
+  margin: 0 6px;
+  width: 150px;
+  padding: 0 0 0 15px;
+}
+
