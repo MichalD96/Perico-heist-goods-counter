@@ -15,8 +15,8 @@
       ]
     },
     "secondary": [
-      { "name": "gold", "value": 332184, "weight": 0.66 },
-      { "name": "weed", "value": 147870, "weight": 0.33 },
+      { "name": "gold", "value": 332184, "weight": 0.667 },
+      { "name": "weed", "value": 147870, "weight": 0.375 },
       { "name": "cocaine", "value": 220095, "weight": 0.5 },
       { "name": "paintings", "value": 189500, "weight": 0.5 },
       { "name": "cash", "value": 90000, "weight": 0.25 }

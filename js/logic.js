@@ -21,7 +21,7 @@ const Counter = {
     return Loader.promises['targets'].execute(data => {
       Counter.targetsData = data;
       Counter.targetsData.targets.secondary.forEach(({ name, value, weight }) => {
-        Counter.secondaryTargetsOrder.push({ name, bag_profit: value / weight })
+        Counter.secondaryTargetsOrder.push({ name, bag_profit: value / weight });
       });
       Counter.secondaryTargetsOrder.sort((...args) => {
         const [a, b] = args.map(({ bag_profit }) => bag_profit);
@@ -63,7 +63,7 @@ const Counter = {
     });
     amounts.forEach(object => {
       const amount = Number(object.amount).toFixed(1);
-      const element = document.querySelector(`#${object.name}-bag`)
+      const element = document.querySelector(`#${object.name}-bag`);
       if (amount !== 0) {
         element.innerHTML = amount;
         element.parentElement.classList.remove("hidden");
