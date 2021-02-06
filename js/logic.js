@@ -65,7 +65,7 @@ const Counter = {
       const amount = Number(object.amount).toFixed(1);
       const element = document.querySelector(`#${object.name}-bag`);
       if (amount !== 0) {
-        element.innerHTML = `${amount} ${object.name} bag${amount > 1 ? 's' : ''}`;
+        element.innerHTML = `${amount} <span>${object.name} bag${amount > 1 ? 's' : ''}</span>`;
         element.parentElement.classList.remove("hidden");
       }
     });
