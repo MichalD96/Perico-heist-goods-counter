@@ -1,3 +1,5 @@
+const mainSettingsPrefix = 'main.'
+
 const SettingProxy = (function () {
   'use strict';
   const _domain = Symbol('domain');
@@ -97,8 +99,34 @@ const SettingProxy = (function () {
   };
 })();
 
+const SearchQuery = (settingsPrefix => {
+  return {
+    getParameter(name, url = window.location.search) {
+      const obj = Object.create(null);
+      new URLSearchParams(url).forEach((value, key) =>
+        obj[key] = value ? JSON.parse(value) : '');
+
+      return obj[name] || null;
+    },
+    getUrl() {
+      const { protocol, hostname, pathname, port } = location;
+      const url = `${protocol}//${hostname}${port ? ':' + port : ''}${pathname}`;
+      const obj = Object.create(null);
+      Object.entries(localStorage).forEach(([key, value]) => {
+        if (key.startsWith(settingsPrefix))
+          obj[key.replace(settingsPrefix, '')] = JSON.parse(value);
+      });
+      const search = Object.entries(obj)
+        .map(pair => pair.map(encodeURIComponent).join('='))
+        .join('&');
+
+      return `${url}?${search}`;
+    }
+  }
+})(mainSettingsPrefix);
+
 // General settings
-const Settings = SettingProxy.createSettingProxy('main');
+const Settings = SettingProxy.createSettingProxy(mainSettingsPrefix);
 Object.entries({
   isHardMode: { default: false },
   amountOfPlayers: { default: 2 },
@@ -113,26 +141,7 @@ Object.entries({
     SettingProxy.addSetting(Settings, name, config);
 
     // Search query settings:
-    const settingValue = getParameterByName(name);
+    const settingValue = SearchQuery.getParameter(name);
     if (!['', null, '[]', '&', '/'].includes(settingValue))
-      Settings[name] = settingValue;
+      Settings[name] = +settingValue;
   });
-
-
-function getParameterByName(name, url) {
-  if (!url) url = window.location.href;
-  name = name.replace(/[\[\]]/g, '\\$&');
-  const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-    results = regex.exec(url);
-  if (!results) return null;
-  if (!results[2]) return '';
-  return decodeURIComponent(results[2].replace(/\+/g, ' '));
-}
-
-function generateSearchQuery() {
-  let base = '';
-  Object.entries(localStorage).forEach(([key, value]) => {
-    base += `${key.substring(key.lastIndexOf('.') + 1, key.length)}=${JSON.parse(value)}&`;
-  });
-  return (`https://michald96.github.io/Perico-heist-goods-counter/?${base}`).replace(/&$/, '');
-}
