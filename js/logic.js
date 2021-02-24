@@ -44,7 +44,15 @@ const Counter = {
       const obj = Counter.targetsData.targets.secondary.find(object => object.name === element.name);
       // if (players == 1 && obj.name === 'gold') return;
       if (obj.name === 'paintings' && emptySpace < .5) return;
-      const maxFill = Settings[obj.name] * obj.weight;
+      const maxFill = (() => {
+        let tempAmount = Settings[obj.name];
+        if (obj.name === 'paintings') {
+          while ((tempAmount * obj.weight) > emptySpace) {
+            tempAmount--;
+          }
+        }
+        return tempAmount * obj.weight
+      })();
       let realFill = maxFill >= players ? players : maxFill;
       bagsFill += +realFill;
       realFill = realFill > emptySpace ? emptySpace : realFill;
@@ -56,11 +64,11 @@ const Counter = {
     Counter.updateWebsite(amounts, finalValue);
   },
   updateWebsite: function (amounts, totalValue) {
-    document.querySelector('#max-loot-value').innerHTML = Math.round(totalValue).toLocaleString();
+    document.querySelector('#max-loot-value').innerHTML = Math.round(totalValue * Counter.targetsData.events_multiplier).toLocaleString();
     document.querySelectorAll('.big').forEach(e => {
-      e.innerHTML = 0;
       e.parentElement.classList.add("hidden");
     });
+
     amounts.forEach(object => {
       const amount = Number(object.amount).toFixed(1);
       const element = document.querySelector(`#${object.name}-bag`);

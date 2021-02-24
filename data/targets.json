@@ -23,5 +23,6 @@
       { "name": "paintings", "value": 189500, "weight": 0.5 },
       { "name": "cash", "value": 90000, "weight": 0.25 }
     ]
-  }
+  },
+  "events_multiplier": 1
 }
