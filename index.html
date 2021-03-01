@@ -23,7 +23,10 @@
   <div class="main-container">
     <div class="custom-input">
       <label for="isHardMode">Hard mode: </label>
-      <input type="checkbox" checked="0" id="isHardMode">
+      <select class="input-text" id="isHardMode">
+        <option value="false">No</option>
+        <option value="true">Yes</option>
+      </select>
     </div>
 
     <div class="custom-input">
@@ -44,6 +47,14 @@
         <option value="2" selected>2</option>
         <option value="3">3</option>
         <option value="4">4</option>
+      </select>
+    </div>
+
+    <div class="custom-input">
+      <label class="darken" for="goldAlone">Collect gold alone?</label>
+      <select class="input-text" id="goldAlone">
+        <option value="false">No</option>
+        <option value="true">Yes</option>
       </select>
     </div>
 

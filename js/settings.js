@@ -133,6 +133,7 @@ const Settings = SettingProxy.createSettingProxy(mainSettingsPrefix);
 Object.entries({
   isHardMode: { default: false },
   amountOfPlayers: { default: 2 },
+  goldAlone: { default: false },
   primaryTarget: { default: 'pink_diamond' },
   gold: { default: 0 },
   cocaine: { default: 0 },

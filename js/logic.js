@@ -7,11 +7,14 @@ const htmlElements = {
   amountOfPlayers: document.querySelector('#amountOfPlayers'),
 }
 Object.entries(htmlElements).forEach(([setting, elementHTML]) => {
-  elementHTML.value = +Settings[setting];
+  elementHTML.value = JSON.parse(Settings[setting]);
 });
-document.querySelector('#isHardMode').checked = Settings.isHardMode;
+document.querySelector('#isHardMode').value = Settings.isHardMode;
+document.querySelector('#goldAlone').value = Settings.goldAlone;
 document.querySelector('#primaryTarget').value = Settings.primaryTarget;
 
+
+document.querySelector('#goldAlone').parentElement.classList.toggle('hidden', Settings.amountOfPlayers !== 1);
 
 const Counter = {
   targetsData: {},
@@ -42,7 +45,7 @@ const Counter = {
       if (emptySpace < .1) return;
       emptySpace = players - bagsFill;
       const obj = Counter.targetsData.targets.secondary.find(object => object.name === element.name);
-      // if (players == 1 && obj.name === 'gold') return;
+      if (!Settings.goldAlone && players == 1 && obj.name === 'gold') return;
       if (obj.name === 'paintings' && emptySpace < .5) return;
       const maxFill = (() => {
         let tempAmount = Settings[obj.name];
@@ -51,7 +54,7 @@ const Counter = {
             tempAmount--;
           }
         }
-        return tempAmount * obj.weight
+        return tempAmount * obj.weight;
       })();
       let realFill = maxFill >= players ? players : maxFill;
       bagsFill += +realFill;
@@ -80,23 +83,30 @@ const Counter = {
   },
   activateHandlers: function () {
     document.querySelector('#isHardMode').addEventListener('change', () => {
-      Settings.isHardMode = !!isHardMode.checked;
+      Settings.isHardMode = JSON.parse(isHardMode.value); // bool
     });
-    document.querySelector('#primaryTarget').addEventListener('change', () => {
-      Settings.primaryTarget = primaryTarget.value;
+    document.querySelector('#goldAlone').addEventListener('change', () => {
+      Settings.goldAlone = JSON.parse(goldAlone.value); // bool
     });
 
+    document.querySelector('#primaryTarget').addEventListener('change', () => {
+      Settings.primaryTarget = primaryTarget.value; // string
+    });
     Object.values(htmlElements).forEach(element => {
       element.addEventListener('change', event => {
         Settings[event.currentTarget.id] = +event.target.value;
       });
     });
 
-    SettingProxy.addListener(Settings, 'gold weed cash cocaine paintings primaryTarget amountOfPlayers isHardMode', Counter.getLoot);
+    SettingProxy.addListener(Settings, 'gold weed cash cocaine paintings primaryTarget isHardMode goldAlone', Counter.getLoot);
+    SettingProxy.addListener(Settings, 'amountOfPlayers', () => {
+      document.querySelector('#goldAlone').parentElement.classList.toggle('hidden', Settings.amountOfPlayers !== 1);
+      Counter.getLoot();
+    })
   }
 }
 
-const findError = callback => (...args) => callback(args).catch(err => console.log(err));
+const findError = callback => (...args) => callback(args).catch(console.log);
 
 function initLogic() {
   const initCounter = Counter.init();
