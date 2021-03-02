@@ -128,6 +128,15 @@ const SearchQuery = (settingsPrefix => {
   }
 })(mainSettingsPrefix);
 
+function setClipboardText(text) {
+  const el = document.createElement('textarea');
+  el.value = text;
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+}
+
 // General settings
 const Settings = SettingProxy.createSettingProxy(mainSettingsPrefix);
 Object.entries({
@@ -146,6 +155,12 @@ Object.entries({
 
     // Search query settings:
     const settingValue = SearchQuery.getParameter(name);
-    if (settingValue && !['', null, '[]', '&', '/'].includes(settingValue))
-      Settings[name] = +settingValue;
+    if (settingValue && !['', null, '[]', '&', '/'].includes(settingValue)) {
+      if (/\d|true|false/g.test(settingValue)) {
+        Settings[name] = JSON.parse(settingValue);
+      }
+      else {
+        Settings[name] = settingValue;
+      }
+    }
   });

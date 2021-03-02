@@ -38,7 +38,7 @@ const Counter = {
     let bagsFill = 0;
     let emptySpace = Settings.amountOfPlayers;
     let totalValue = 0;
-    const isHardMode = (Settings.isHardMode ? 'hard_mode' : 'easy_mode');
+    const isHardMode = Settings.isHardMode ? 'hard_mode' : 'easy_mode';
     const players = Settings.amountOfPlayers;
 
     Counter.secondaryTargetsOrder.forEach(element => {
@@ -98,11 +98,16 @@ const Counter = {
       });
     });
 
+    document.querySelector('#link-settings').addEventListener('click', () => {
+      setClipboardText(SearchQuery.getUrl());
+      alert('Link has been copied to clipboard!');
+    });
+
     SettingProxy.addListener(Settings, 'gold weed cash cocaine paintings primaryTarget isHardMode goldAlone', Counter.getLoot);
     SettingProxy.addListener(Settings, 'amountOfPlayers', () => {
       document.querySelector('#goldAlone').parentElement.classList.toggle('hidden', Settings.amountOfPlayers !== 1);
       Counter.getLoot();
-    })
+    });
   }
 }
 
