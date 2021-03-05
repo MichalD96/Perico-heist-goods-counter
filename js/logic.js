@@ -73,7 +73,7 @@ const Counter = {
     });
 
     amounts.forEach(object => {
-      const amount = Number(object.amount).toFixed(1);
+      const amount = rounding(Number(object.amount));
       const element = document.querySelector(`#${object.name}-bag`);
       if (amount !== 0) {
         element.innerHTML = `${amount} <span>${object.name} bag${amount > 1 ? 's' : ''}</span>`;
@@ -130,3 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
     alert(error);
   }
 });
+
+function rounding(value) {
+  return (Math.round(value * 20) * 0.05).toFixed(2);
+}
