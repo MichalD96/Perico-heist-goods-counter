@@ -149,6 +149,10 @@ Object.entries({
   cash: { default: 0 },
   paintings: { default: 0 },
   weed: { default: 0 },
+  leaderCut: { default: 80 },
+  member1Cut: { default: 20 },
+  member2Cut: { default: 15 },
+  member3Cut: { default: 15 },
 })
   .forEach(([name, config]) => {
     SettingProxy.addSetting(Settings, name, config);

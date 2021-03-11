@@ -5,6 +5,10 @@ const htmlElements = {
   cocaine: document.querySelector('#cocaine'),
   paintings: document.querySelector('#paintings'),
   amountOfPlayers: document.querySelector('#amountOfPlayers'),
+  leaderCut: document.querySelector('#leaderCut'),
+  member1Cut: document.querySelector('#member1Cut'),
+  member2Cut: document.querySelector('#member2Cut'),
+  member3Cut: document.querySelector('#member3Cut'),
 }
 Object.entries(htmlElements).forEach(([setting, elementHTML]) => {
   elementHTML.value = JSON.parse(Settings[setting]);
@@ -13,8 +17,6 @@ document.querySelector('#isHardMode').value = Settings.isHardMode;
 document.querySelector('#goldAlone').value = Settings.goldAlone;
 document.querySelector('#primaryTarget').value = Settings.primaryTarget;
 
-
-document.querySelector('#goldAlone').parentElement.classList.toggle('hidden', Settings.amountOfPlayers !== 1);
 
 const Counter = {
   targetsData: {},
@@ -72,10 +74,16 @@ const Counter = {
     const pavelFee = totalValue * .02;
     document.querySelector('#fencing-fee').innerHTML = Math.round(fencingFee).toLocaleString();
     document.querySelector('#pavel-fee').innerHTML = Math.round(pavelFee).toLocaleString();
-    document.querySelector('#max-loot-value').innerHTML = Math.round((totalValue - fencingFee - pavelFee)).toLocaleString();
+    const finalValue = totalValue - fencingFee - pavelFee;
+    document.querySelector('#max-loot-value').innerHTML = Math.round(finalValue).toLocaleString();
     document.querySelectorAll('.big').forEach(e => {
       e.parentElement.classList.add("hidden");
     });
+
+    htmlElements.leaderCut.nextElementSibling.innerHTML = Math.round(finalValue * Settings.leaderCut / 100).toLocaleString();
+    htmlElements.member1Cut.nextElementSibling.innerHTML = Math.round(finalValue * Settings.member1Cut / 100).toLocaleString();
+    htmlElements.member2Cut.nextElementSibling.innerHTML = Math.round(finalValue * Settings.member2Cut / 100).toLocaleString();
+    htmlElements.member3Cut.nextElementSibling.innerHTML = Math.round(finalValue * Settings.member3Cut / 100).toLocaleString();
 
     amounts.forEach(object => {
       const amount = rounding(Number(object.amount));
@@ -108,11 +116,14 @@ const Counter = {
       alert('Link has been copied to clipboard!');
     });
 
-    SettingProxy.addListener(Settings, 'gold weed cash cocaine paintings primaryTarget isHardMode goldAlone', Counter.getLoot);
+    SettingProxy.addListener(Settings, 'gold weed cash cocaine paintings primaryTarget isHardMode goldAlone leaderCut member1Cut member2Cut member3Cut', Counter.getLoot);
     SettingProxy.addListener(Settings, 'amountOfPlayers', () => {
       document.querySelector('#goldAlone').parentElement.classList.toggle('hidden', Settings.amountOfPlayers !== 1);
+      document.querySelector('#member1Cut').parentElement.classList.toggle('hidden', Settings.amountOfPlayers < 2);
+      document.querySelector('#member2Cut').parentElement.classList.toggle('hidden', Settings.amountOfPlayers < 3);
+      document.querySelector('#member3Cut').parentElement.classList.toggle('hidden', Settings.amountOfPlayers < 4);
       Counter.getLoot();
-    });
+    })();
   }
 }
 
