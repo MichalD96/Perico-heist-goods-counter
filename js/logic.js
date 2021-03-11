@@ -61,13 +61,18 @@ const Counter = {
       realFill = realFill > emptySpace ? emptySpace : realFill;
       if (realFill < 0.1) return;
       amounts.push({ name: obj.name, amount: realFill });
-      totalValue += realFill * (obj.value / obj.weight);
+      totalValue += realFill * (getAverage(obj.value.min, obj.value.max) / obj.weight);
     });
     const finalValue = totalValue + Counter.targetsData.targets.primary[isHardMode].find(e => e.name === Settings.primaryTarget).value;
     Counter.updateWebsite(amounts, finalValue);
   },
   updateWebsite: function (amounts, totalValue) {
-    document.querySelector('#max-loot-value').innerHTML = Math.round(totalValue * Counter.targetsData.events_multiplier).toLocaleString();
+    totalValue *= Counter.targetsData.events_multiplier;
+    const fencingFee = totalValue * .1;
+    const pavelFee = totalValue * .02;
+    document.querySelector('#fencing-fee').innerHTML = Math.round(fencingFee).toLocaleString();
+    document.querySelector('#pavel-fee').innerHTML = Math.round(pavelFee).toLocaleString();
+    document.querySelector('#max-loot-value').innerHTML = Math.round((totalValue - fencingFee - pavelFee)).toLocaleString();
     document.querySelectorAll('.big').forEach(e => {
       e.parentElement.classList.add("hidden");
     });
@@ -133,4 +138,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function rounding(value) {
   return (Math.round(value * 20) * 0.05).toFixed(2);
+}
+
+function getAverage(...args) {
+  return args.reduce((acc, val) => acc + val, 0) / args.length;
 }

@@ -81,6 +81,11 @@ body {
   color: greenyellow;
 }
 
+#fencing-fee::before,
+#pavel-fee::before {
+  content: '$';
+}
+
 hr {
   margin: 10px 0;
 }
@@ -186,4 +191,8 @@ input[type="number"] {
   height: 25px;
   border: 2px solid #acacac;
   background-color: #2222
+}
+
+.dimmed {
+  opacity: .65;
 }

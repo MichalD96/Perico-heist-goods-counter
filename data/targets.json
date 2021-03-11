@@ -17,11 +17,11 @@
       ]
     },
     "secondary": [
-      { "name": "gold", "value": 332184, "weight": 0.667 },
-      { "name": "cocaine", "value": 220095, "weight": 0.5 },
-      { "name": "weed", "value": 147870, "weight": 0.375 },
-      { "name": "paintings", "value": 189500, "weight": 0.5 },
-      { "name": "cash", "value": 90000, "weight": 0.25 }
+      { "name": "gold", "value": { "min": 328584, "max": 333192 }, "weight": 0.667 },
+      { "name": "cocaine", "value": { "min": 220500, "max": 225000 }, "weight": 0.5 },
+      { "name": "weed", "value": { "min": 145980, "max": 149265 }, "weight": 0.375 },
+      { "name": "paintings", "value": { "min": 176200, "max": 199700 }, "weight": 0.5 },
+      { "name": "cash", "value": { "min": 78480, "max": 89420 }, "weight": 0.25 }
     ]
   },
   "events_multiplier": 1
