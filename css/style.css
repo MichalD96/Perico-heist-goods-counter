@@ -84,7 +84,7 @@ body {
 }
 
 .custom-input-narrow span::before {
-  content: "% = $";
+  content: "%: $";
 }
 
 .main-container .right {
