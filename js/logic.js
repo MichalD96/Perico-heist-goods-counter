@@ -26,7 +26,7 @@ const Counter = {
     return Loader.promises['targets'].execute(data => {
       Counter.targetsData = data;
       Counter.targetsData.targets.secondary.forEach(({ name, value, weight }) => {
-        Counter.secondaryTargetsOrder.push({ name, bag_profit: value / weight });
+        Counter.secondaryTargetsOrder.push({ name, bag_profit: getAverage(value.min, value.max) / weight });
       });
       Counter.secondaryTargetsOrder.sort((...args) => {
         const [a, b] = args.map(({ bag_profit }) => bag_profit);
