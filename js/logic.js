@@ -44,7 +44,7 @@ const Counter = {
     const players = Settings.amountOfPlayers;
 
     Counter.secondaryTargetsOrder.forEach(element => {
-      if (emptySpace < .1) return;
+      if (emptySpace < .05) return;
       emptySpace = players - bagsFill;
       const obj = Counter.targetsData.targets.secondary.find(object => object.name === element.name);
       if (!Settings.goldAlone && players == 1 && obj.name === 'gold') return;
@@ -61,7 +61,7 @@ const Counter = {
       let realFill = maxFill >= players ? players : maxFill;
       bagsFill += +realFill;
       realFill = realFill > emptySpace ? emptySpace : realFill;
-      if (realFill < 0.1) return;
+      if (realFill < 0.05) return;
       amounts.push({ name: obj.name, amount: realFill });
       totalValue += realFill * (getAverage(obj.value.min, obj.value.max) / obj.weight);
     });
@@ -77,20 +77,19 @@ const Counter = {
     const finalValue = totalValue - fencingFee - pavelFee;
     document.querySelector('#max-loot-value').innerHTML = Math.round(finalValue).toLocaleString();
     document.querySelectorAll('.big').forEach(e => {
-      e.parentElement.classList.add("hidden");
+      e.parentElement.classList.add('hidden');
     });
 
-    htmlElements.leaderCut.nextElementSibling.innerHTML = Math.round(finalValue * Settings.leaderCut / 100).toLocaleString();
-    htmlElements.member1Cut.nextElementSibling.innerHTML = Math.round(finalValue * Settings.member1Cut / 100).toLocaleString();
-    htmlElements.member2Cut.nextElementSibling.innerHTML = Math.round(finalValue * Settings.member2Cut / 100).toLocaleString();
-    htmlElements.member3Cut.nextElementSibling.innerHTML = Math.round(finalValue * Settings.member3Cut / 100).toLocaleString();
+    Object.entries([...document.querySelectorAll('.cuts input')]).forEach(([index, element]) => {
+      element.nextElementSibling.innerHTML = Math.round(finalValue * Settings[element.id] / 100).toLocaleString();
+    });
 
     amounts.forEach(object => {
       const amount = rounding(Number(object.amount));
       const element = document.querySelector(`#${object.name}-bag`);
       if (amount !== 0) {
         element.innerHTML = `${amount} <span>${object.name} bag${amount > 1 ? 's' : ''}</span>`;
-        element.parentElement.classList.remove("hidden");
+        element.parentElement.classList.remove('hidden');
       }
     });
   },
@@ -119,9 +118,9 @@ const Counter = {
     SettingProxy.addListener(Settings, 'gold weed cash cocaine paintings primaryTarget isHardMode goldAlone leaderCut member1Cut member2Cut member3Cut', Counter.getLoot);
     SettingProxy.addListener(Settings, 'amountOfPlayers', () => {
       document.querySelector('#goldAlone').parentElement.classList.toggle('hidden', Settings.amountOfPlayers !== 1);
-      document.querySelector('#member1Cut').parentElement.classList.toggle('hidden', Settings.amountOfPlayers < 2);
-      document.querySelector('#member2Cut').parentElement.classList.toggle('hidden', Settings.amountOfPlayers < 3);
-      document.querySelector('#member3Cut').parentElement.classList.toggle('hidden', Settings.amountOfPlayers < 4);
+      Object.entries([...document.querySelectorAll('.cuts input')]).forEach(([index, element]) => {
+        element.parentElement.classList.toggle('hidden', Settings.amountOfPlayers <= index);
+      });
       Counter.getLoot();
     })();
   }
