@@ -118,7 +118,8 @@ const Counter = {
     SettingProxy.addListener(Settings, 'gold weed cash cocaine paintings primaryTarget isHardMode goldAlone leaderCut member1Cut member2Cut member3Cut', Counter.getLoot);
     SettingProxy.addListener(Settings, 'amountOfPlayers', () => {
       document.querySelector('#goldAlone').parentElement.classList.toggle('hidden', Settings.amountOfPlayers !== 1);
-      Object.entries([...document.querySelectorAll('.cuts input')]).forEach(([index, element]) => {
+      const inputs = document.querySelectorAll('.cuts input');
+      Object.entries([...inputs]).forEach(([index, element]) => {
         element.parentElement.classList.toggle('hidden', Settings.amountOfPlayers <= index);
       });
       Counter.getLoot();
