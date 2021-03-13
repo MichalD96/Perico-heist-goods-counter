@@ -26,17 +26,18 @@ const Counter = {
     return Loader.promises['targets'].execute(data => {
       Counter.targetsData = data;
       Counter.targetsData.targets.secondary.forEach(({ name, value, weight }) => {
-        Counter.secondaryTargetsOrder.push({ name, bag_profit: getAverage(value.min, value.max) / weight });
+        const profit = getAverage(value.min, value.max) / weight;
+        Counter.secondaryTargetsOrder.push({ name, bagProfit: profit });
       });
       Counter.secondaryTargetsOrder.sort((...args) => {
-        const [a, b] = args.map(({ bag_profit }) => bag_profit);
+        const [a, b] = args.map(({ bagProfit }) => bagProfit);
         return b - a;
       });
       Counter.getLoot();
     });
   },
   getLoot: function () {
-    let amounts = [];
+    const amounts = [];
     let bagsFill = 0;
     let emptySpace = Settings.amountOfPlayers;
     let totalValue = 0;
@@ -80,7 +81,8 @@ const Counter = {
       e.parentElement.classList.add('hidden');
     });
 
-    Object.entries([...document.querySelectorAll('.cuts input')]).forEach(([index, element]) => {
+    const inputs = document.querySelectorAll('.cuts input');
+    [...inputs].forEach(element => {
       element.nextElementSibling.innerHTML = Math.round(finalValue * Settings[element.id] / 100).toLocaleString();
     });
 
@@ -119,7 +121,7 @@ const Counter = {
     SettingProxy.addListener(Settings, 'amountOfPlayers', () => {
       document.querySelector('#goldAlone').parentElement.classList.toggle('hidden', Settings.amountOfPlayers !== 1);
       const inputs = document.querySelectorAll('.cuts input');
-      Object.entries([...inputs]).forEach(([index, element]) => {
+      [...inputs].forEach((element, index) => {
         element.parentElement.classList.toggle('hidden', Settings.amountOfPlayers <= index);
       });
       Counter.getLoot();

@@ -44,8 +44,8 @@ class Loader {
   }
 }
 
-const urlsSetOne = [
+const jsonFiles = [
   'data/targets.json',
 ];
 
-Loader.fetchData(urlsSetOne);
+Loader.fetchData(jsonFiles);
