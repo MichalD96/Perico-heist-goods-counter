@@ -225,3 +225,7 @@ input[type="number"] {
 .dimmed {
   opacity: .65;
 }
+
+.properties {
+  margin: 25px 0;
+}
