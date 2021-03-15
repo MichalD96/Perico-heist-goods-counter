@@ -71,19 +71,22 @@ const Counter = {
   },
   updateWebsite: function (amounts, totalValue) {
     totalValue *= Counter.targetsData.events_multiplier;
+    const officeSafe = Counter.targetsData.targets.office_safe;
+    const averageOfficeSafe = getAverage(officeSafe.min, officeSafe.max);
     const fencingFee = totalValue * .1;
     const pavelFee = totalValue * .02;
-    document.querySelector('#fencing-fee').innerHTML = Math.round(fencingFee).toLocaleString();
-    document.querySelector('#pavel-fee').innerHTML = Math.round(pavelFee).toLocaleString();
-    const finalValue = totalValue - fencingFee - pavelFee;
-    document.querySelector('#max-loot-value').innerHTML = Math.round(finalValue).toLocaleString();
+    document.querySelector('#office-safe').innerText = `~ $${Math.round(averageOfficeSafe).toLocaleString()}`;
+    document.querySelector('#fencing-fee').innerText = Math.round(fencingFee).toLocaleString();
+    document.querySelector('#pavel-fee').innerText = Math.round(pavelFee).toLocaleString();
+    const finalValue = totalValue + averageOfficeSafe - fencingFee - pavelFee;
+    document.querySelector('#max-loot-value').innerText = Math.round(finalValue).toLocaleString();
     document.querySelectorAll('.big').forEach(e => {
       e.parentElement.classList.add('hidden');
     });
 
     const inputs = document.querySelectorAll('.cuts input');
     [...inputs].forEach(element => {
-      element.nextElementSibling.innerHTML = Math.round(finalValue * Settings[element.id] / 100).toLocaleString();
+      element.nextElementSibling.innerText = Math.round(finalValue * Settings[element.id] / 100).toLocaleString();
     });
 
     amounts.forEach(object => {
