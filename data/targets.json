@@ -25,5 +25,6 @@
     ],
     "office_safe": { "min": 50000, "max": 99000 }
   },
-  "events_multiplier": 1
+  "events_multiplier": 1,
+  "elite_challenge": 100000
 }

@@ -109,6 +109,7 @@ body {
   color: greenyellow;
 }
 
+#elite-challenge::before,
 #fencing-fee::before,
 #pavel-fee::before {
   content: '$';
