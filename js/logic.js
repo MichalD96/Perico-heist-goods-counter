@@ -63,7 +63,11 @@ const Counter = {
       bagsFill += +realFill;
       realFill = realFill > emptySpace ? emptySpace : realFill;
       if (realFill < 0.05) return;
-      amounts.push({ name: obj.name, amount: realFill });
+      const clicks = (() => {
+        const value = Math.trunc((realFill * obj.clicks || 1) / obj.weight);
+        return (obj.name === 'paintings') ? `${value} cuts` : `${value} clicks`;
+      })();
+      amounts.push({ name: obj.name, amount: realFill,  clicks: clicks });
       totalValue += realFill * (getAverage(obj.value.min, obj.value.max) / obj.weight);
     });
     const finalValue = totalValue + Counter.targetsData.targets.primary[isHardMode].find(e => e.name === Settings.primaryTarget).value;
@@ -95,7 +99,7 @@ const Counter = {
       const amount = rounding(Number(object.amount));
       const element = document.querySelector(`#${object.name}-bag`);
       if (amount !== 0) {
-        element.innerHTML = `${amount} <span>${object.name} bag${amount > 1 ? 's' : ''}</span>`;
+        element.innerHTML = `${amount} <span>${object.name} bag${amount > 1 ? 's' : ''} - ${object.clicks}</span>`;
         element.parentElement.classList.remove('hidden');
       }
     });
