@@ -1,21 +1,12 @@
 {
   "targets": {
-    "primary": {
-      "easy_mode": [
-        { "name": "tequila", "value": 900000 },
-        { "name": "ruby_necklace", "value": 1000000 },
-        { "name": "bearer_bonds", "value": 1100000 },
-        { "name": "pink_diamond", "value": 1300000 },
-        { "name": "panther_statue", "value": 1900000 }
-      ],
-      "hard_mode": [
-        { "name": "tequila", "value": 990000 },
-        { "name": "ruby_necklace", "value": 1100000 },
-        { "name": "bearer_bonds", "value": 1210000 },
-        { "name": "pink_diamond", "value": 1430000 },
-        { "name": "panther_statue", "value": 2090000 }
-      ]
-    },
+    "primary": [
+      { "name": "tequila", "value": { "standard": 900000, "hard": 990000 } },
+      { "name": "ruby_necklace", "value": { "standard": 1000000, "hard": 1100000 } },
+      { "name": "bearer_bonds", "value": { "standard": 1100000, "hard": 1210000 } },
+      { "name": "pink_diamond", "value": { "standard": 1300000, "hard": 1430000 } },
+      { "name": "panther_statue", "value": { "standard": 1900000, "hard": 2090000 } }
+    ],
     "secondary": [
       { "name": "gold", "value": { "min": 328584, "max": 333192 }, "weight": 0.667, "clicks": 7 },
       { "name": "cocaine", "value": { "min": 220500, "max": 225000 }, "weight": 0.5, "clicks": 10 },

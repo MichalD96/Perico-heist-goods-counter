@@ -41,7 +41,7 @@ const Counter = {
     let bagsFill = 0;
     let emptySpace = Settings.amountOfPlayers;
     let totalValue = 0;
-    const isHardMode = Settings.isHardMode ? 'hard_mode' : 'easy_mode';
+    const isHardMode = Settings.isHardMode ? 'hard' : 'standard';
     const players = Settings.amountOfPlayers;
 
     Counter.secondaryTargetsOrder.forEach(element => {
@@ -64,13 +64,16 @@ const Counter = {
       realFill = realFill > emptySpace ? emptySpace : realFill;
       if (realFill < 0.05) return;
       const clicks = (() => {
-        const value = Math.trunc((realFill * obj.clicks || 1) / obj.weight);
+        const value = Math.floor(realFill * obj.clicks / obj.weight);
         return (obj.name === 'paintings') ? `${value} cuts` : `${value} clicks`;
       })();
-      amounts.push({ name: obj.name, amount: realFill,  clicks: clicks });
+
+      amounts.push({ name: obj.name, amount: realFill, clicks: clicks });
       totalValue += realFill * (getAverage(obj.value.min, obj.value.max) / obj.weight);
     });
-    const finalValue = totalValue + Counter.targetsData.targets.primary[isHardMode].find(e => e.name === Settings.primaryTarget).value;
+    const finalValue = totalValue + Counter.targetsData.targets.primary.find(({ name }) =>
+      name === Settings.primaryTarget).value[isHardMode];
+
     Counter.updateWebsite(amounts, finalValue);
   },
   updateWebsite: function (amounts, totalValue) {
