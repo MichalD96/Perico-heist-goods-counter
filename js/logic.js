@@ -64,7 +64,9 @@ const Counter = {
       realFill = realFill > emptySpace ? emptySpace : realFill;
       if (realFill < 0.05) return;
       const clicks = (() => {
-        const value = Math.floor(realFill * obj.clicks / obj.weight);
+        console.log(obj.name, realFill, obj.weight, realFill / obj.weight);
+        const rest = realFill / obj.weight - Math.trunc(realFill / obj.weight);
+        const value = Math.trunc(realFill / obj.weight) * obj.pickup_steps.length + findClosestValue(rest * 100, obj.pickup_steps);
         return (obj.name === 'paintings') ? `${value} cuts` : `${value} clicks`;
       })();
 
@@ -167,4 +169,10 @@ function rounding(value) {
 
 function getAverage(...args) {
   return args.reduce((acc, val) => acc + val, 0) / args.length;
+}
+
+function findClosestValue(value, array) {
+  return array
+    .map(element => Math.abs(value - element))
+    .reduce((acc, el, index, arr) => el < arr[acc] ? index : acc, 0);
 }
