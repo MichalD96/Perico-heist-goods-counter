@@ -64,9 +64,9 @@ const Counter = {
       realFill = realFill > emptySpace ? emptySpace : realFill;
       if (realFill < 0.05) return;
       const clicks = (() => {
-        console.log(obj.name, realFill, obj.weight, realFill / obj.weight);
-        const rest = realFill / obj.weight - Math.trunc(realFill / obj.weight);
-        const value = Math.trunc(realFill / obj.weight) * obj.pickup_steps.length + findClosestValue(rest * 100, obj.pickup_steps);
+        const stacks = Math.floor(realFill / obj.weight);
+        // TODO fix it (this values are not accurate)
+        const value = stacks * obj.bag_capacity_steps.length + findClosestValue((realFill - stacks) * 100, obj.bag_capacity_steps) + (stacks === 0 ? 1 : 0);
         return (obj.name === 'paintings') ? `${value} cuts` : `${value} clicks`;
       })();
 
@@ -176,3 +176,12 @@ function findClosestValue(value, array) {
     .map(element => Math.abs(value - element))
     .reduce((acc, el, index, arr) => el < arr[acc] ? index : acc, 0);
 }
+
+
+Object.defineProperty(Array.prototype, 'indexOfClosestValue', {
+  value: function (value) {
+    return this
+      .map(element => Math.abs(value - element))
+      .reduce((acc, el, index, arr) => el < arr[acc] ? index : acc, 0);
+  }
+})
