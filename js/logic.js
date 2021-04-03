@@ -176,12 +176,3 @@ function findClosestValue(value, array) {
     .map(element => Math.abs(value - element))
     .reduce((acc, el, index, arr) => el < arr[acc] ? index : acc, 0);
 }
-
-
-Object.defineProperty(Array.prototype, 'indexOfClosestValue', {
-  value: function (value) {
-    return this
-      .map(element => Math.abs(value - element))
-      .reduce((acc, el, index, arr) => el < arr[acc] ? index : acc, 0);
-  }
-})
