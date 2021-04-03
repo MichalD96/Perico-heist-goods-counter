@@ -153,8 +153,7 @@ Object.entries({
   member1Cut: { default: 20 },
   member2Cut: { default: 15 },
   member3Cut: { default: 15 },
-})
-  .forEach(([name, config]) => {
+}).forEach(([name, config]) => {
     SettingProxy.addSetting(Settings, name, config);
 
     // Search query settings:
