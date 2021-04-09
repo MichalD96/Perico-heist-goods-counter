@@ -64,9 +64,9 @@ const Counter = {
       realFill = realFill > emptySpace ? emptySpace : realFill;
       if (realFill < 0.05) return;
       const clicks = (() => {
-        const stacks = Math.floor(realFill / obj.weight);
-        // TODO fix it (this values are not accurate)
-        const value = stacks * obj.bag_capacity_steps.length + findClosestValue((realFill - stacks) * 100, obj.bag_capacity_steps) + (stacks === 0 ? 1 : 0);
+        console.log(obj.name, realFill, obj.weight, realFill / obj.weight);
+        const rest = realFill / obj.weight - Math.trunc(realFill / obj.weight);
+        const value = Math.trunc(realFill / obj.weight) * obj.pickup_steps.length + findClosestValue(rest * 100, obj.pickup_steps);
         return (obj.name === 'paintings') ? `${value} cuts` : `${value} clicks`;
       })();
 
