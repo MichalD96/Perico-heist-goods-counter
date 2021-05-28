@@ -62,11 +62,12 @@ const Counter = {
       let realFill = maxFill >= players ? players : maxFill;
       bagsFill += +realFill;
       realFill = realFill > emptySpace ? emptySpace : realFill;
+      console.log(obj.name, 'fill:', realFill);
       if (realFill < 0.05) return;
       const clicks = (() => {
         console.log(obj.name, realFill, obj.weight, realFill / obj.weight);
         const rest = realFill / obj.weight - Math.trunc(realFill / obj.weight);
-        const value = Math.trunc(realFill / obj.weight) * obj.pickup_steps.length + findClosestValue(rest * 100, obj.pickup_steps);
+        const value = Math.trunc(realFill / obj.weight) * obj.pickup_steps.length + findClosestValue((rest % 1) * 100, obj.pickup_steps);
         return (obj.name === 'paintings') ? `${value} cuts` : `${value} clicks`;
       })();
 
@@ -146,9 +147,7 @@ const Counter = {
 const findError = callback => (...args) => callback(args).catch(console.log);
 
 function initLogic() {
-  const initCounter = Counter.init();
-
-  Promise.all([initCounter])
+  Counter.init()
     .then(Counter.activateHandlers)
     .then(Loader.resolveContentLoaded);
 };
@@ -172,7 +171,8 @@ function getAverage(...args) {
 }
 
 function findClosestValue(value, array) {
+  if (value === 0) return 0;
   return array
     .map(element => Math.abs(value - element))
-    .reduce((acc, el, index, arr) => el < arr[acc] ? index : acc, 0);
+    .reduce((acc, el, index, arr) => el < arr[acc] ? index : acc, 0) + 1;
 }
