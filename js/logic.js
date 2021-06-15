@@ -62,12 +62,10 @@ const Counter = {
       let realFill = maxFill >= players ? players : maxFill;
       bagsFill += +realFill;
       realFill = realFill > emptySpace ? emptySpace : realFill;
-      console.log(obj.name, 'fill:', realFill);
       if (realFill < 0.05) return;
       const clicks = (() => {
-        console.log(obj.name, realFill, obj.weight, realFill / obj.weight);
         const rest = realFill / obj.weight - Math.trunc(realFill / obj.weight);
-        const value = Math.trunc(realFill / obj.weight) * obj.pickup_steps.length + findClosestValue((rest % 1) * 100, obj.pickup_steps);
+        const value = Math.trunc(realFill / obj.weight) * obj.pickup_steps.length + (findClosestValue((rest % 1) * 100, obj.pickup_steps));
         return (obj.name === 'paintings') ? `${value} cuts` : `${value} clicks`;
       })();
 
@@ -85,7 +83,7 @@ const Counter = {
     const averageOfficeSafe = getAverage(officeSafe.min, officeSafe.max);
     const fencingFee = totalValue * .1;
     const pavelFee = totalValue * .02;
-    const eliteChallenge = Counter.targetsData.elite_challenge;
+    const eliteChallenge = Counter.targetsData.elite_challenge[Settings.isHardMode ? 'hard' : 'standard'];
     document.querySelector('#office-safe').innerText = `~ $${Math.round(averageOfficeSafe).toLocaleString()}`;
     document.querySelector('#fencing-fee').innerText = Math.round(fencingFee).toLocaleString();
     document.querySelector('#pavel-fee').innerText = Math.round(pavelFee).toLocaleString();
