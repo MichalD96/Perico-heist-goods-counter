@@ -213,13 +213,18 @@ input[type="number"] {
   color: bisque;
 }
 
-#link-settings {
-  margin: 25px 0 0 50%;
+.button {
+  cursor: pointer;
+  margin: 5px;
   border-radius: 5px;
-  width: 50%;
+  width: 45%;
   height: 25px;
   border: 2px solid #acacac;
   background-color: #2222
+}
+
+.flex {
+  display: flex;
 }
 
 .dimmed {

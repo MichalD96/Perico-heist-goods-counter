@@ -130,6 +130,15 @@ const Counter = {
       alert('Link has been copied to clipboard!');
     });
 
+    document.querySelector('#reset-settings').addEventListener('click', () => {
+      document.querySelector('#primaryTarget').value = 'tequila';
+      Settings.primaryTarget = 'tequila';
+      ['gold', 'weed', 'cash', 'cocaine', 'paintings'].forEach(target => {
+        Settings[target] = 0;
+        htmlElements[target].value = 0;
+      });
+    });
+
     SettingProxy.addListener(Settings, 'gold weed cash cocaine paintings primaryTarget isHardMode goldAlone leaderCut member1Cut member2Cut member3Cut', Counter.getLoot);
     SettingProxy.addListener(Settings, 'amountOfPlayers', () => {
       document.querySelector('#goldAlone').parentElement.classList.toggle('hidden', Settings.amountOfPlayers !== 1);
