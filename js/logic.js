@@ -29,10 +29,6 @@ const Counter = {
         const profit = getAverage(value.min, value.max) / weight;
         Counter.secondaryTargetsOrder.push({ name, bagProfit: profit });
       });
-      Counter.secondaryTargetsOrder.sort((...args) => {
-        const [a, b] = args.map(({ bagProfit }) => bagProfit);
-        return b - a;
-      });
       Counter.getLoot();
     });
   },
@@ -65,8 +61,11 @@ const Counter = {
       if (realFill < 0.05) return;
       const clicks = (() => {
         const rest = realFill / obj.weight - Math.trunc(realFill / obj.weight);
-        const value = Math.trunc(realFill / obj.weight) * obj.pickup_steps.length + (findClosestValue((rest % 1) * 100, obj.pickup_steps));
-        return (obj.name === 'paintings') ? `${value} cuts` : `${value} clicks`;
+        let value = Math.trunc(realFill / obj.weight) * obj.pickup_steps.length + (findClosestValue((rest % 1) * 100, obj.pickup_steps));
+        if (obj.name === 'cash' && value % 10 !== 0) {
+          value += 1;
+        }
+        return (obj.name === 'paintings') ? `${value * 4} cuts` : `${value} clicks`;
       })();
 
       amounts.push({ name: obj.name, amount: realFill, clicks: clicks });
