@@ -21,121 +21,126 @@
 </head>
 
 <body>
-  <h3>Created by: <a href="https://github.com/MichalD96" target="_blank">Michal__d</a></h3>
-  <h5>Site build in progress ;)</h5>
-  <h5>Report all issues <a target="_blank" href="https://github.com/MichalD96/Perico-heist-goods-counter/issues/">Here (GitHub)</a></h5>
-  <h5>Support the project <a target="_blank" href="https://www.paypal.com/paypalme/Michald96">Here (PayPal)</a></h5>
+  <div class="credentials">
+    <h3>Created by: <a href="https://github.com/MichalD96" target="_blank">Michal__d</a></h3>
+    <h5>Site build in progress ;)</h5>
+    <h5>Report all issues <a target="_blank" href="https://github.com/MichalD96/Perico-heist-goods-counter/issues/">Here (GitHub)</a></h5>
+    <h5>Support the project <a target="_blank" href="https://www.paypal.com/paypalme/Michald96">Here (PayPal)</a></h5>
+  </div>
+  <div class="flex">
 
-  <div class="main-container">
-    <div class="custom-input">
-      <label for="isHardMode">Hard mode: </label>
-      <select class="input-text" id="isHardMode">
-        <option value="false">No</option>
-        <option value="true">Yes</option>
-      </select>
+    <div class="main-container">
+      <div class="custom-input">
+        <label for="isHardMode">Hard mode: </label>
+        <select class="input-text" id="isHardMode">
+          <option value="false">No</option>
+          <option value="true">Yes</option>
+        </select>
+      </div>
+
+      <div class="custom-input">
+        <label for="primaryTarget">Main Target</label>
+        <select class="input-text" id="primaryTarget">
+          <option value="tequila">Tequila</option>
+          <option value="ruby_necklace">Ruby Necklace</option>
+          <option value="bearer_bonds">Bearer Bonds</option>
+          <option value="pink_diamond" selected>Pink Diamond</option>
+          <option value="panther_statue">Panther Statue</option>
+        </select>
+      </div>
+
+      <div class="custom-input">
+        <label for="amountOfPlayers">Amount of players</label>
+        <select class="input-text" id="amountOfPlayers">
+          <option value="1">1</option>
+          <option value="2" selected>2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+      </div>
+
+      <div class="custom-input">
+        <label class="darken" for="goldAlone">Collect gold alone?</label>
+        <select class="input-text" id="goldAlone">
+          <option value="false">No</option>
+          <option value="true">Yes</option>
+        </select>
+      </div>
+
+      <div class="custom-input">
+        <label for="gold">Gold stacks:</label>
+        <input type="number" id="gold" name="gold" value="1" min="0" max="10">
+      </div>
+
+      <div class="custom-input">
+        <label for="cocaine">Cocaine stacks:</label>
+        <input type="number" id="cocaine" name="cocaine" value="1" min="0" max="10">
+      </div>
+
+      <div class="custom-input">
+        <label for="weed">Weed stacks:</label>
+        <input type="number" id="weed" name="weed" value="1" min="0" max="10">
+      </div>
+
+      <div class="custom-input">
+        <label for="paintings">Paintings:</label>
+        <input type="number" id="paintings" name="paintings" value="1" min="0" max="10">
+      </div>
+
+      <div class="custom-input">
+        <label for="cash">Cash stacks:</label>
+        <input type="number" id="cash" name="cash" value="1" min="0" max="10">
+      </div>
     </div>
 
-    <div class="custom-input">
-      <label for="primaryTarget">Main Target</label>
-      <select class="input-text" id="primaryTarget">
-        <option value="tequila">Tequila</option>
-        <option value="ruby_necklace">Ruby Necklace</option>
-        <option value="bearer_bonds">Bearer Bonds</option>
-        <option value="pink_diamond" selected>Pink Diamond</option>
-        <option value="panther_statue">Panther Statue</option>
-      </select>
-    </div>
-
-    <div class="custom-input">
-      <label for="amountOfPlayers">Amount of players</label>
-      <select class="input-text" id="amountOfPlayers">
-        <option value="1">1</option>
-        <option value="2" selected>2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-      </select>
-    </div>
-
-    <div class="custom-input">
-      <label class="darken" for="goldAlone">Collect gold alone?</label>
-      <select class="input-text" id="goldAlone">
-        <option value="false">No</option>
-        <option value="true">Yes</option>
-      </select>
-    </div>
-
-    <div class="custom-input">
-      <label for="gold">Gold stacks:</label>
-      <input type="number" id="gold" name="gold" value="1" min="0" max="10">
-    </div>
-
-    <div class="custom-input">
-      <label for="cocaine">Cocaine stacks:</label>
-      <input type="number" id="cocaine" name="cocaine" value="1" min="0" max="10">
-    </div>
-
-    <div class="custom-input">
-      <label for="weed">Weed stacks:</label>
-      <input type="number" id="weed" name="weed" value="1" min="0" max="10">
-    </div>
-
-    <div class="custom-input">
-      <label for="paintings">Paintings:</label>
-      <input type="number" id="paintings" name="paintings" value="1" min="0" max="10">
-    </div>
-
-    <div class="custom-input">
-      <label for="cash">Cash stacks:</label>
-      <input type="number" id="cash" name="cash" value="1" min="0" max="10">
+    <div class="main-container right">
+      <div class="dimmed">+ Office safe: <span id="office-safe"></span></div>
+      <div class="dimmed">- Fencing fee (10%): <span id="fencing-fee"></span></div>
+      <div class="dimmed">- Pavel fee (2%): <span id="pavel-fee"></span></div>
+      <div class="dimmed">+ Elite Challenge: <span id="elite-challenge"></span> for every player*</div>
+      <div class="cuts">
+        <div class="custom-input-narrow">
+          <label contenteditable="true" for="leader">Leader</label>
+          <input type="number" id="leaderCut" value="85" min="15" max="100" step="5">
+          <span></span>
+        </div>
+        <div class="custom-input-narrow">
+          <label contenteditable="true" for="member1">Member 1</label>
+          <input type="number" id="member1Cut" value="15" min="15" max="85" step="5">
+          <span></span>
+        </div>
+        <div class="custom-input-narrow">
+          <label contenteditable="true" for="member2">Member 2</label>
+          <input type="number" id="member2Cut" value="15" min="15" max="70" step="5">
+          <span></span>
+        </div>
+        <div class="custom-input-narrow">
+          <label contenteditable="true" for="member3">Member 3</label>
+          <input type="number" id="member3Cut" value="15" min="15" max="55" step="5">
+          <span></span>
+        </div>
+      </div>
+      <hr>
+      <div>Max possible profit: <span id="max-loot-value"></span></div>
+      <hr>
+      <p>You can take (in profit order):</p>
+      <div class="hidden"><span class="big" id="gold-bag">0</span></div>
+      <div class="hidden"><span class="big" id="cocaine-bag">0</span></div>
+      <div class="hidden"><span class="big" id="weed-bag">0</span></div>
+      <div class="hidden"><span class="big" id="paintings-bag">0</span></div>
+      <div class="hidden"><span class="big" id="cash-bag">0</span></div>
+      <br>
+      <hr>
+      <div class="flex-buttons">
+        <button id="reset-settings" class="button">Reset settings to default</button>
+        <button id="link-settings" class="button">Copy link with settings</button>
+      </div>
+      <div class="properties">
+        <p>* - not included to current final value</p>
+      </div>
     </div>
   </div>
 
-  <div class="main-container right">
-    <div class="dimmed">+ Office safe: <span id="office-safe"></span></div>
-    <div class="dimmed">- Fencing fee (10%): <span id="fencing-fee"></span></div>
-    <div class="dimmed">- Pavel fee (2%): <span id="pavel-fee"></span></div>
-    <div class="dimmed">+ Elite Challenge: <span id="elite-challenge"></span> for every player*</div>
-    <div class= "cuts">
-      <div class="custom-input-narrow">
-        <label contenteditable="true" for="leader">Leader</label>
-        <input type="number" id="leaderCut" value="85" min="15" max="100" step="5">
-        <span></span>
-      </div>
-      <div class="custom-input-narrow">
-        <label contenteditable="true" for="member1">Member 1</label>
-        <input type="number" id="member1Cut" value="15" min="15" max="85" step="5">
-        <span></span>
-      </div>
-      <div class="custom-input-narrow">
-        <label contenteditable="true" for="member2">Member 2</label>
-        <input type="number" id="member2Cut" value="15" min="15" max="70" step="5">
-        <span></span>
-      </div>
-      <div class="custom-input-narrow">
-        <label contenteditable="true" for="member3">Member 3</label>
-        <input type="number" id="member3Cut" value="15" min="15" max="55" step="5">
-        <span></span>
-      </div>
-    </div>
-    <hr>
-    <div>Max possible profit: <span id="max-loot-value"></span></div>
-    <hr>
-    <p>You can take (in profit order):</p>
-    <div class="hidden"><span class="big" id="gold-bag">0</span></div>
-    <div class="hidden"><span class="big" id="cocaine-bag">0</span></div>
-    <div class="hidden"><span class="big" id="weed-bag">0</span></div>
-    <div class="hidden"><span class="big" id="paintings-bag">0</span></div>
-    <div class="hidden"><span class="big" id="cash-bag">0</span></div>
-    <br>
-    <hr>
-    <div class="flex">
-      <button id="reset-settings" class="button">Reset settings to default</button>
-      <button id="link-settings" class="button">Copy link with settings</button>
-    </div>
-    <div class="properties">
-      <p>* - not included to current final value</p>
-    </div>
-  </div>
 
   <script src="js/loader.js?nocache=1004"></script>
   <script src="js/settings.js?nocache=1004"></script>

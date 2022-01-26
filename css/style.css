@@ -33,15 +33,27 @@
 body {
   margin: 10px;
   font-family: Hapna, serif;
+  display: flex;
+  flex-wrap: wrap;
+  height: 620px;
+}
+.credentials {
+  width: 220px;
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin: 15px auto;
 }
 
 .main-container {
   display: grid;
   width: 360px;
-  height: 100%;
-  align-items: center;
-  align-content: center;
-  margin: 25px auto;
+  align-content: flex-start;
+  max-height: 100%;
+  margin: 20px auto;
 }
 
 .custom-input {
@@ -49,8 +61,8 @@ body {
   margin: auto;
   width: 100%;
   height: 2.5rem;
-  align-items: center;
-  align-content: center;
+  /* align-items: center;
+  align-content: center; */
 }
 
 .custom-input select,
@@ -223,7 +235,7 @@ input[type="number"] {
   background-color: #2222
 }
 
-.flex {
+.flex-buttons {
   display: flex;
 }
 
