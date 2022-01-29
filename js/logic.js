@@ -60,7 +60,7 @@ const Counter = {
       realFill = realFill > emptySpace ? emptySpace : realFill;
       if (realFill < 0.05) return;
       const clicks = (() => {
-        const rest = Number((realFill / obj.weight - Math.trunc(realFill / obj.weight)).toFixed(2));
+        const rest = Number((realFill / obj.weight - Math.trunc(realFill / obj.weight)).toFixed(3));
         let value = Math.trunc(realFill / obj.weight) * obj.pickup_steps.length + findClosestValue(rest % 1 * 100, obj.pickup_steps);
         if (obj.name === 'cash' && value % 10 !== 0) {
           value += 1;
