@@ -9,7 +9,7 @@ const htmlElements = {
   member1Cut: document.querySelector('#member1Cut'),
   member2Cut: document.querySelector('#member2Cut'),
   member3Cut: document.querySelector('#member3Cut'),
-}
+};
 Object.entries(htmlElements).forEach(([setting, elementHTML]) => {
   elementHTML.value = JSON.parse(Settings[setting]);
 });
@@ -22,7 +22,7 @@ const Counter = {
   targetsData: {},
   secondaryTargetsOrder: [],
 
-  init: function () {
+  init: function() {
     return Loader.promises['targets'].execute(data => {
       Counter.targetsData = data;
       Counter.targetsData.targets.secondary.forEach(({ name, value, weight }) => {
@@ -32,7 +32,7 @@ const Counter = {
       Counter.getLoot();
     });
   },
-  getLoot: function () {
+  getLoot: function() {
     const amounts = [];
     let bagsFill = 0;
     let emptySpace = Settings.amountOfPlayers;
@@ -41,15 +41,15 @@ const Counter = {
     const players = Settings.amountOfPlayers;
 
     Counter.secondaryTargetsOrder.forEach(element => {
-      if (emptySpace < .05) return;
+      if (emptySpace < 0.05) return;
       emptySpace = players - bagsFill;
       const obj = Counter.targetsData.targets.secondary.find(object => object.name === element.name);
-      if (!Settings.goldAlone && players == 1 && obj.name === 'gold') return;
-      if (obj.name === 'paintings' && emptySpace < .5) return;
+      if (!Settings.goldAlone && +players === 1 && obj.name === 'gold') return;
+      if (obj.name === 'paintings' && emptySpace < 0.5) return;
       const maxFill = (() => {
         let tempAmount = Settings[obj.name];
         if (obj.name === 'paintings') {
-          while ((tempAmount * obj.weight) > emptySpace) {
+          while (tempAmount * obj.weight > emptySpace) {
             tempAmount--;
           }
         }
@@ -61,11 +61,11 @@ const Counter = {
       if (realFill < 0.05) return;
       const clicks = (() => {
         const rest = Number((realFill / obj.weight - Math.trunc(realFill / obj.weight)).toFixed(2));
-        let value = Math.trunc(realFill / obj.weight) * obj.pickup_steps.length + (findClosestValue((rest % 1) * 100, obj.pickup_steps));
+        let value = Math.trunc(realFill / obj.weight) * obj.pickup_steps.length + findClosestValue(rest % 1 * 100, obj.pickup_steps);
         if (obj.name === 'cash' && value % 10 !== 0) {
           value += 1;
         }
-        return (obj.name === 'paintings') ? `${value * 4} cuts` : `${value} clicks`;
+        return obj.name === 'paintings' ? `${value * 4} cuts` : `${value} clicks`;
       })();
 
       amounts.push({ name: obj.name, amount: realFill, clicks: clicks });
@@ -76,12 +76,12 @@ const Counter = {
 
     Counter.updateWebsite(amounts, finalValue);
   },
-  updateWebsite: function (amounts, totalValue) {
+  updateWebsite: function(amounts, totalValue) {
     totalValue *= Counter.targetsData.events_multiplier;
     const officeSafe = Counter.targetsData.targets.office_safe;
     const averageOfficeSafe = getAverage(officeSafe.min, officeSafe.max);
-    const fencingFee = totalValue * .1;
-    const pavelFee = totalValue * .02;
+    const fencingFee = totalValue * 0.1;
+    const pavelFee = totalValue * 0.02;
     const eliteChallenge = Counter.targetsData.elite_challenge[Settings.isHardMode ? 'hard' : 'standard'];
     document.querySelector('#office-safe').innerText = `~ $${Math.round(averageOfficeSafe).toLocaleString()}`;
     document.querySelector('#fencing-fee').innerText = Math.round(fencingFee).toLocaleString();
@@ -107,7 +107,7 @@ const Counter = {
       }
     });
   },
-  activateHandlers: function () {
+  activateHandlers: function() {
     document.querySelector('#isHardMode').addEventListener('change', () => {
       Settings.isHardMode = JSON.parse(isHardMode.value); // bool
     });
@@ -147,8 +147,8 @@ const Counter = {
       });
       Counter.getLoot();
     })();
-  }
-}
+  },
+};
 
 const findError = callback => (...args) => callback(args).catch(console.log);
 
@@ -156,13 +156,12 @@ function initLogic() {
   Counter.init()
     .then(Counter.activateHandlers)
     .then(Loader.resolveContentLoaded);
-};
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   try {
     initLogic();
-  }
-  catch (error) {
+  } catch (error) {
     console.log(error);
     alert(error);
   }

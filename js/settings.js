@@ -1,18 +1,18 @@
-const mainSettingsPrefix = 'main'
+const mainSettingsPrefix = 'main';
 
-const SettingProxy = (function () {
-  'use strict';
+const SettingProxy = (function() {
+
   const _domain = Symbol('domain');
   const _proxyConfig = Symbol('proxyConfig');
   const settingHandler = {
-    _checkAndGetSettingConfig: function (proxyConfig, name, errorType) {
+    _checkAndGetSettingConfig: function(proxyConfig, name, errorType) {
       if (!proxyConfig.has(name)) {
         throw new errorType(`"${name}" is not configured as a persisted setting.`);
       } else {
         return proxyConfig.get(name);
       }
     },
-    get: function (proxyConfig, name) {
+    get: function(proxyConfig, name) {
       if (name === _proxyConfig) return proxyConfig;
 
       const config = settingHandler._checkAndGetSettingConfig(proxyConfig, name, ReferenceError);
@@ -36,7 +36,7 @@ const SettingProxy = (function () {
 
       return config.value;
     },
-    set: function (proxyConfig, name, value) {
+    set: function(proxyConfig, name, value) {
       const config = settingHandler._checkAndGetSettingConfig(proxyConfig, name, TypeError);
       if (value === config.default) {
         localStorage.removeItem(config.settingName);
@@ -53,12 +53,12 @@ const SettingProxy = (function () {
   };
 
   return {
-    createSettingProxy: function (domain) {
+    createSettingProxy: function(domain) {
       return new Proxy(new Map([
-        [_domain, domain]
+        [_domain, domain],
       ]), settingHandler);
     },
-    addSetting: function (settingProxy, name, config = {}) {
+    addSetting: function(settingProxy, name, config = {}) {
       const proxyConfig = settingProxy[_proxyConfig];
       if (proxyConfig.has(name)) {
         throw new TypeError(`A setting was already registered as ${name}.`);
@@ -74,19 +74,19 @@ const SettingProxy = (function () {
         const basicTypes = {
           'boolean': Boolean,
           'string': String,
-          'number': Number
+          'number': Number,
         };
         config.type = defaultType in basicTypes ? basicTypes[defaultType] : x => x;
       }
       if (!('filter' in config)) {
-        config.filter = x => true;
+        config.filter = () => true;
       }
       if (!('settingName' in config)) {
         config.settingName = `${proxyConfig.get(_domain)}.${name}`;
       }
       proxyConfig.set(name, config);
     },
-    addListener: function (settingProxy, names, callback) {
+    addListener: function(settingProxy, names, callback) {
       const proxyConfig = settingProxy[_proxyConfig];
       names = Array.isArray(names) ? names : names.split(' ');
       names.forEach(name => {
@@ -102,7 +102,7 @@ const SettingProxy = (function () {
 const SearchQuery = (settingsPrefix => {
   return {
     getParameter(name, url = window.location.href) {
-      name = name.replace(/[\[\]]/g, '\\$&');
+      name = name.replace(/[[\]]/g, '\\$&');
       const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
         results = regex.exec(url);
       if (!results) return null;
@@ -124,8 +124,8 @@ const SearchQuery = (settingsPrefix => {
         .join('&');
 
       return `${url}?${search}`;
-    }
-  }
+    },
+  };
 })(mainSettingsPrefix);
 
 function setClipboardText(text) {
@@ -154,16 +154,15 @@ Object.entries({
   member2Cut: { default: 15 },
   member3Cut: { default: 15 },
 }).forEach(([name, config]) => {
-    SettingProxy.addSetting(Settings, name, config);
+  SettingProxy.addSetting(Settings, name, config);
 
-    // Search query settings:
-    const settingValue = SearchQuery.getParameter(name);
-    if (settingValue && !['', null, '[]', '&', '/'].includes(settingValue)) {
-      if (/\d|true|false/g.test(settingValue)) {
-        Settings[name] = JSON.parse(settingValue);
-      }
-      else {
-        Settings[name] = settingValue;
-      }
+  // Search query settings:
+  const settingValue = SearchQuery.getParameter(name);
+  if (settingValue && !['', null, '[]', '&', '/'].includes(settingValue)) {
+    if (/\d|true|false/g.test(settingValue)) {
+      Settings[name] = JSON.parse(settingValue);
+    } else {
+      Settings[name] = settingValue;
     }
-  });
+  }
+});

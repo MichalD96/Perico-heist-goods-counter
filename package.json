@@ -1,0 +1,23 @@
+{
+  "name": "perico-heist-goods-counter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MichalD96/Perico-heist-goods-counter.git"
+  },
+  "author": "Michal__d",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MichalD96/Perico-heist-goods-counter/issues"
+  },
+  "homepage": "https://github.com/MichalD96/Perico-heist-goods-counter#readme",
+  "devDependencies": {
+    "eslint": "^7.27.0",
+    "prettier": "^2.5.1"
+  }
+}

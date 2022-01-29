@@ -1,9 +1,8 @@
 class Loader {
-  static promises = {};
-  static urls = new Set();
-  static fetchProperties = { method: 'GET', cache: 'no-cache' };
-
   static fetchData(urls) {
+    this.promises = {};
+    this.urls = new Set();
+    this.fetchProperties = { method: 'GET', cache: 'no-cache' };
     urls.forEach(url => {
       this.urls.add(url);
       const fileName = this.getName(url);
@@ -14,7 +13,9 @@ class Loader {
         throw new Error(`"${fileName}" already registered!`);
     });
 
-    this.contentLoaded = new Promise(resolve => this.resolveContentLoaded = resolve);
+    this.contentLoaded = new Promise(resolve => {
+      this.resolveContentLoaded = resolve;
+    });
   }
   constructor(url, noCache = null) {
     this._json = (async () => {
