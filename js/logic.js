@@ -106,6 +106,8 @@ const Counter = {
         element.parentElement.classList.remove('hidden');
       }
     });
+
+    document.querySelector('#bags_fill').innerText = amounts.reduce((acc, obj) => acc + +rounding(+obj.amount), 0).toFixed(2);
   },
   activateHandlers: function() {
     document.querySelector('#isHardMode').addEventListener('change', () => {

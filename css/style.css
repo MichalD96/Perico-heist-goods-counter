@@ -238,6 +238,7 @@ input[type="number"] {
 
 .flex-buttons {
   display: flex;
+  margin: 5px -5px;
 }
 
 .dimmed {
@@ -246,4 +247,9 @@ input[type="number"] {
 
 .properties {
   margin: 25px 0;
+}
+
+#bags_fill {
+  font-size: 1.15em;
+  color: rgb(255, 255, 121);
 }
