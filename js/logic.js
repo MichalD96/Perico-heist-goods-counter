@@ -58,11 +58,11 @@ const Counter = {
       let realFill = maxFill >= players ? players : maxFill;
       bagsFill += +realFill;
       realFill = realFill > emptySpace ? emptySpace : realFill;
-      if (realFill < 0.05) return;
+      if (realFill < 0.025) return;
       const clicks = (() => {
         const rest = Number((realFill / obj.weight - Math.trunc(realFill / obj.weight)).toFixed(3));
         let value = Math.trunc(realFill / obj.weight) * obj.pickup_steps.length + findClosestValue(rest % 1 * 100, obj.pickup_steps);
-        if (obj.name === 'cash' && value % 10 !== 0) {
+        if (['cash', 'weed', 'coke'].includes(obj.name) && value % 10 !== 0) {
           value += 1;
         }
         return obj.name === 'paintings' ? `${value * 4} cuts` : `${value} clicks`;
