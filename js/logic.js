@@ -93,6 +93,14 @@ const Counter = {
       e.parentElement.classList.add('hidden');
     });
 
+    Counter.targetsData.targets.secondary.forEach(({ name, value: { min, max } }) => {
+      document.querySelector(`#${name}-stacks-value`).innerText = '$' + Math.round((min + max) / 2).toLocaleString();
+    });
+    Counter.targetsData.targets.secondary.forEach(({ name, weight, value: { min, max } }) => {
+      const avg = (min + max) / 2;
+      document.querySelector(`#${name}-bags-value`).innerText = '$' + Math.round(avg / weight).toLocaleString();
+    });
+
     const inputs = document.querySelectorAll('.cuts input');
     [...inputs].forEach(element => {
       element.nextElementSibling.innerText = Math.round(finalValue * Settings[element.id] / 100).toLocaleString();

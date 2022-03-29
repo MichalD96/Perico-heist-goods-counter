@@ -88,7 +88,34 @@
 
       <div class="custom-input">
         <label for="cash">Cash stacks:</label>
-        <input type="number" id="cash" name="cash" value="1" min="0" max="10">
+        <input type="number" id="cash" name="cash" value="1" min="0" max="15">
+      </div>
+      <h4>Average secondary targets values:</h4>
+      <div class="stacks-values">
+        <div class="targets-names">
+          <div>Target:</div>
+          <div class="dimmed">Gold:</div>
+          <div class="dimmed">Cocaine:</div>
+          <div class="dimmed">Weed:</div>
+          <div class="dimmed">Painting:</div>
+          <div class="dimmed">Cash:</div>
+        </div>
+        <div class="targets-stacks">
+          <div>Stack value:</div>
+          <div class="dimmed" id="gold-stacks-value"></div>
+          <div class="dimmed" id="cocaine-stacks-value"></div>
+          <div class="dimmed" id="weed-stacks-value"></div>
+          <div class="dimmed" id="paintings-stacks-value"></div>
+          <div class="dimmed" id="cash-stacks-value"></div>
+        </div>
+        <div class="targets-bags">
+          <div>Full bag value:</div>
+          <div class="dimmed" id="gold-bags-value"></div>
+          <div class="dimmed" id="cocaine-bags-value"></div>
+          <div class="dimmed" id="weed-bags-value"></div>
+          <div class="dimmed" id="paintings-bags-value"></div>
+          <div class="dimmed" id="cash-bags-value"></div>
+        </div>
       </div>
     </div>
 

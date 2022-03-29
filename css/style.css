@@ -253,3 +253,22 @@ input[type="number"] {
   font-size: 1.15em;
   color: rgb(255, 255, 121);
 }
+
+h4 {
+  margin-top: 15px;
+}
+
+.stacks-values {
+  display: flex;
+  margin: 5px 40px 0 0;
+  line-height: 1.8rem;
+}
+
+.targets-names {
+  min-width: 90px;
+}
+
+.targets-bags,
+.targets-stacks {
+  min-width: 110px;
+}
