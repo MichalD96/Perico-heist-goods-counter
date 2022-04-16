@@ -41,7 +41,7 @@ const Counter = {
     const players = Settings.amountOfPlayers;
 
     Counter.secondaryTargetsOrder.forEach(element => {
-      if (emptySpace < 0.05) return;
+      if (emptySpace < 0.01) return;
       emptySpace = players - bagsFill;
       const obj = Counter.targetsData.targets.secondary.find(object => object.name === element.name);
       if (!Settings.goldAlone && +players === 1 && obj.name === 'gold') return;
@@ -58,7 +58,7 @@ const Counter = {
       let realFill = maxFill >= players ? players : maxFill;
       bagsFill += +realFill;
       realFill = realFill > emptySpace ? emptySpace : realFill;
-      if (realFill < 0.025) return;
+      if (realFill < 0.02) return;
       const clicks = (() => {
         const rest = Number((realFill / obj.weight - Math.trunc(realFill / obj.weight)).toFixed(3));
         let value = Math.trunc(realFill / obj.weight) * obj.pickup_steps.length + findClosestValue(rest % 1 * 100, obj.pickup_steps);
@@ -99,6 +99,9 @@ const Counter = {
     Counter.targetsData.targets.secondary.forEach(({ name, weight, value: { min, max } }) => {
       const avg = (min + max) / 2;
       document.querySelector(`#${name}-bags-value`).innerText = '$' + Math.round(avg / weight).toLocaleString();
+    });
+    Counter.targetsData.targets.secondary.forEach(({ name, bag_capacity_steps: bagCapacity }) => {
+      document.querySelector(`#${name}-bag-percent`).innerText = rounding([...bagCapacity].pop()) + '%';
     });
 
     const inputs = document.querySelectorAll('.cuts input');
