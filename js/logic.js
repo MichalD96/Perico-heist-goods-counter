@@ -16,7 +16,7 @@ Object.entries(htmlElements).forEach(([setting, elementHTML]) => {
 document.querySelector('#isHardMode').value = Settings.isHardMode;
 document.querySelector('#goldAlone').value = Settings.goldAlone;
 document.querySelector('#primaryTarget').value = Settings.primaryTarget;
-
+let bags = {};
 
 const Counter = {
   targetsData: {},
@@ -58,7 +58,7 @@ const Counter = {
       let realFill = maxFill >= players ? players : maxFill;
       bagsFill += +realFill;
       realFill = realFill > emptySpace ? emptySpace : realFill;
-      if (realFill < 0.02) return;
+      if (realFill < 0.01) return;
       const clicks = (() => {
         const rest = Number((realFill / obj.weight - Math.trunc(realFill / obj.weight)).toFixed(3));
         let value = Math.trunc(realFill / obj.weight) * obj.pickup_steps.length + findClosestValue(rest % 1 * 100, obj.pickup_steps);
@@ -109,6 +109,7 @@ const Counter = {
       element.nextElementSibling.innerText = Math.round(finalValue * Settings[element.id] / 100).toLocaleString();
     });
 
+    bags = {};
     amounts.forEach(object => {
       const amount = rounding(Number(object.amount));
       const element = document.querySelector(`#${object.name}-bag`);
@@ -116,6 +117,7 @@ const Counter = {
         element.innerHTML = `${amount} <span>${object.name} bag${amount > 1 ? 's' : ''} - ${object.clicks}</span>`;
         element.parentElement.classList.remove('hidden');
       }
+      bags[object.name] = [Number(amount), Number(object.clicks.replace(/clicks|cuts/g, ''))];
     });
 
     document.querySelector('#bags_fill').innerText = amounts.reduce((acc, obj) => acc + +rounding(+obj.amount), 0).toFixed(2);
@@ -138,6 +140,17 @@ const Counter = {
     });
 
     document.querySelector('#link-settings').addEventListener('click', () => {
+      if (window.event.ctrlKey) {
+        const json = JSON.stringify({
+          hard: Settings.isHardMode,
+          target: Settings.primaryTarget,
+          players: Settings.amountOfPlayers,
+          ...bags,
+        });
+        setClipboardText(`$loot ${json}`);
+        return;
+      }
+
       setClipboardText(SearchQuery.getUrl());
       alert('Link has been copied to clipboard!');
     });
