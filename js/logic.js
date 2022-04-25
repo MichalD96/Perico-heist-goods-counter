@@ -41,7 +41,7 @@ const Counter = {
     const players = Settings.amountOfPlayers;
 
     Counter.secondaryTargetsOrder.forEach(element => {
-      if (emptySpace < 0.01) return;
+      if (emptySpace < 0.05) return;
       emptySpace = players - bagsFill;
       const obj = Counter.targetsData.targets.secondary.find(object => object.name === element.name);
       if (!Settings.goldAlone && +players === 1 && obj.name === 'gold') return;
@@ -58,7 +58,7 @@ const Counter = {
       let realFill = maxFill >= players ? players : maxFill;
       bagsFill += +realFill;
       realFill = realFill > emptySpace ? emptySpace : realFill;
-      if (realFill < 0.01) return;
+      if (realFill < 0.025) return;
       const clicks = (() => {
         const rest = Number((realFill / obj.weight - Math.trunc(realFill / obj.weight)).toFixed(3));
         let value = Math.trunc(realFill / obj.weight) * obj.pickup_steps.length + findClosestValue(rest % 1 * 100, obj.pickup_steps);
@@ -89,6 +89,7 @@ const Counter = {
     document.querySelector('#elite-challenge').innerText = Math.round(eliteChallenge).toLocaleString();
     const finalValue = totalValue + averageOfficeSafe - fencingFee - pavelFee;
     document.querySelector('#max-loot-value').innerText = Math.round(finalValue).toLocaleString();
+
     document.querySelectorAll('.big').forEach(e => {
       e.parentElement.classList.add('hidden');
     });
@@ -109,7 +110,9 @@ const Counter = {
       element.nextElementSibling.innerText = Math.round(finalValue * Settings[element.id] / 100).toLocaleString();
     });
 
-    bags = {};
+    bags = {
+      profit: Math.round(finalValue),
+    };
     amounts.forEach(object => {
       const amount = rounding(Number(object.amount));
       const element = document.querySelector(`#${object.name}-bag`);
