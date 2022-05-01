@@ -120,7 +120,7 @@ const Counter = {
         element.innerHTML = `${amount} <span>${object.name} bag${amount > 1 ? 's' : ''} - ${object.clicks}</span>`;
         element.parentElement.classList.remove('hidden');
       }
-      bags[object.name] = [Number(amount), Number(object.clicks.replace(/clicks|cuts/g, ''))];
+      bags[object.name] = [Number(amount), Number(object.clicks.replace(/clicks|cuts/g, '')), Number(htmlElements[object.name].value)];
     });
 
     document.querySelector('#bags_fill').innerText = amounts.reduce((acc, obj) => acc + +rounding(+obj.amount), 0).toFixed(2);
