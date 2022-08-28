@@ -141,6 +141,7 @@ function setClipboardText(text) {
 const Settings = SettingProxy.createSettingProxy(mainSettingsPrefix);
 Object.entries({
   isHardMode: { default: false },
+  isWithinCooldown: { default: false },
   amountOfPlayers: { default: 2 },
   goldAlone: { default: false },
   primaryTarget: { default: 'pink_diamond' },
