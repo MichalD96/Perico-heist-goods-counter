@@ -39,8 +39,8 @@ const Counter = {
     let emptySpace = Settings.amountOfPlayers;
     let totalValue = 0;
     const isHardMode = Settings.isHardMode ? 'hard' : 'standard';
-    const withinCooldownSecondaryBonus =  Settings.isWithinCooldown ?
-        Counter.targetsData.targets.primary.find(({ name }) => name === Settings.primaryTarget).withinCooldownSecondaryBonus : 1;
+    const withinCooldownSecondaryBonus = Settings.isWithinCooldown ?
+      Counter.targetsData.targets.primary.find(({ name }) => name === Settings.primaryTarget).withinCooldownSecondaryBonus : 1;
     const players = Settings.amountOfPlayers;
 
     Counter.secondaryTargetsOrder.forEach(element => {
@@ -72,7 +72,7 @@ const Counter = {
       })();
 
       amounts.push({ name: obj.name, amount: realFill, clicks: clicks });
-      totalValue += realFill * ((getAverage(obj.value.min, obj.value.max) * withinCooldownSecondaryBonus) / obj.weight);
+      totalValue += realFill * (getAverage(obj.value.min, obj.value.max) * withinCooldownSecondaryBonus / obj.weight);
     });
     const finalValue = totalValue + Counter.targetsData.targets.primary.find(({ name }) =>
       name === Settings.primaryTarget).value[isHardMode];
