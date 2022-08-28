@@ -14,6 +14,7 @@ Object.entries(htmlElements).forEach(([setting, elementHTML]) => {
   elementHTML.value = JSON.parse(Settings[setting]);
 });
 document.querySelector('#isHardMode').value = Settings.isHardMode;
+document.querySelector('#isWithinCooldown').value = Settings.isWithinCooldown;
 document.querySelector('#goldAlone').value = Settings.goldAlone;
 document.querySelector('#primaryTarget').value = Settings.primaryTarget;
 let bags = {};
@@ -38,6 +39,8 @@ const Counter = {
     let emptySpace = Settings.amountOfPlayers;
     let totalValue = 0;
     const isHardMode = Settings.isHardMode ? 'hard' : 'standard';
+    const withinCooldownSecondaryBonus =  Settings.isWithinCooldown ?
+        Counter.targetsData.targets.primary.find(({ name }) => name === Settings.primaryTarget).withinCooldownSecondaryBonus : 1;
     const players = Settings.amountOfPlayers;
 
     Counter.secondaryTargetsOrder.forEach(element => {
@@ -69,14 +72,14 @@ const Counter = {
       })();
 
       amounts.push({ name: obj.name, amount: realFill, clicks: clicks });
-      totalValue += realFill * (getAverage(obj.value.min, obj.value.max) / obj.weight);
+      totalValue += realFill * ((getAverage(obj.value.min, obj.value.max) * withinCooldownSecondaryBonus) / obj.weight);
     });
     const finalValue = totalValue + Counter.targetsData.targets.primary.find(({ name }) =>
       name === Settings.primaryTarget).value[isHardMode];
 
-    Counter.updateWebsite(amounts, finalValue);
+    Counter.updateWebsite(amounts, finalValue, withinCooldownSecondaryBonus);
   },
-  updateWebsite: function(amounts, totalValue) {
+  updateWebsite: function(amounts, totalValue, withinCooldownSecondaryBonus) {
     totalValue *= Counter.targetsData.events_multiplier;
     const officeSafe = Counter.targetsData.targets.office_safe;
     const averageOfficeSafe = getAverage(officeSafe.min, officeSafe.max);
@@ -95,10 +98,10 @@ const Counter = {
     });
 
     Counter.targetsData.targets.secondary.forEach(({ name, value: { min, max } }) => {
-      document.querySelector(`#${name}-stacks-value`).innerText = '$' + Math.round((min + max) / 2).toLocaleString();
+      document.querySelector(`#${name}-stacks-value`).innerText = '$' + Math.round((min + max) * withinCooldownSecondaryBonus / 2).toLocaleString();
     });
     Counter.targetsData.targets.secondary.forEach(({ name, weight, value: { min, max } }) => {
-      const avg = (min + max) / 2;
+      const avg = (min + max) * withinCooldownSecondaryBonus / 2;
       document.querySelector(`#${name}-bags-value`).innerText = '$' + Math.round(avg / weight).toLocaleString();
     });
     Counter.targetsData.targets.secondary.forEach(({ name, bag_capacity_steps: bagCapacity }) => {
@@ -129,6 +132,11 @@ const Counter = {
     document.querySelector('#isHardMode').addEventListener('change', () => {
       Settings.isHardMode = JSON.parse(isHardMode.value); // bool
     });
+
+    document.querySelector('#isWithinCooldown').addEventListener('change', () => {
+      Settings.isWithinCooldown = JSON.parse(isWithinCooldown.value); // bool
+    });
+
     document.querySelector('#goldAlone').addEventListener('change', () => {
       Settings.goldAlone = JSON.parse(goldAlone.value); // bool
     });
@@ -146,6 +154,7 @@ const Counter = {
       if (window.event.ctrlKey) {
         const json = JSON.stringify({
           hard: Settings.isHardMode,
+          withinCooldown: Settings.isWithinCooldown,
           target: Settings.primaryTarget,
           players: Settings.amountOfPlayers,
           ...bags,
@@ -167,7 +176,7 @@ const Counter = {
       });
     });
 
-    SettingProxy.addListener(Settings, 'gold weed cash cocaine paintings primaryTarget isHardMode goldAlone leaderCut member1Cut member2Cut member3Cut', Counter.getLoot);
+    SettingProxy.addListener(Settings, 'gold weed cash cocaine paintings primaryTarget isHardMode isWithinCooldown goldAlone leaderCut member1Cut member2Cut member3Cut', Counter.getLoot);
     SettingProxy.addListener(Settings, 'amountOfPlayers', () => {
       document.querySelector('#goldAlone').parentElement.classList.toggle('hidden', Settings.amountOfPlayers !== 1);
       const inputs = document.querySelectorAll('.cuts input');
