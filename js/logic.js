@@ -65,8 +65,12 @@ const Counter = {
       const clicks = (() => {
         const rest = Number((realFill / obj.weight - Math.trunc(realFill / obj.weight)).toFixed(3));
         let value = Math.trunc(realFill / obj.weight) * obj.pickup_steps.length + findClosestValue(rest % 1 * 100, obj.pickup_steps);
+        /*
+          fix of R* underestimation (ex. 2 stacks of coke fills one bag, but one stack only 45% of the bag)
+          the more players mix secondary targets in their bags, the more this value is underestimated
+        */
         if (['cash', 'weed', 'coke'].includes(obj.name) && value % 10 !== 0) {
-          value += 1;
+          value += Settings.amountOfPlayers;
         }
         return obj.name === 'paintings' ? `${value * 4} cuts` : `${value} clicks`;
       })();
