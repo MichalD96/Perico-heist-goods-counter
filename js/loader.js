@@ -1,11 +1,10 @@
 class Loader {
   static fetchData(urls) {
     this.promises = {};
-    this.urls = new Set();
-    this.fetchProperties = { method: 'GET', cache: 'no-cache' };
+    this.urls = new Map();
     urls.forEach(url => {
-      this.urls.add(url);
       const fileName = this.getName(url);
+      this.urls.set(fileName, url);
 
       if (!this.promises[fileName])
         this.promises[fileName] = new Loader(url);
@@ -17,10 +16,10 @@ class Loader {
       this.resolveContentLoaded = resolve;
     });
   }
-  constructor(url, noCache = null) {
+  constructor(url, noCache) {
     this._json = (async () => {
       try {
-        const response = await fetch(url, noCache || Loader.fetchProperties);
+        const response = await fetch(`${url}?nocache=${noCache || new Date().toISOString().split('T')[0]}`);
         return await response.json();
       } catch (err) {
         throw new Error(`Failed to load: ${url}\n${err}`);
@@ -34,11 +33,8 @@ class Loader {
   }
   static reloadData(name) {
     delete this.promises[name];
-    const url = this.urls.find(url => this.getName(url) === name);
-    this.promises[name] = new Loader(url, { cache: 'no-cache' });
-  }
-  static set fetchOptions(obj) {
-    this.fetchProperties = Object.assign(this.fetchProperties, obj);
+    const url = this.urls.get(name);
+    this.promises[name] = new Loader(url, Date.now());
   }
   static getName(url) {
     return url.split('/').pop().split('.', 1)[0];
