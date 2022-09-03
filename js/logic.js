@@ -66,7 +66,7 @@ const Counter = {
         const rest = Number((realFill / obj.weight - Math.trunc(realFill / obj.weight)).toFixed(3));
         let value = Math.trunc(realFill / obj.weight) * obj.pickup_steps.length + findClosestValue(rest % 1 * 100, obj.pickup_steps);
         if (['cash', 'weed', 'coke'].includes(obj.name) && value % 10 !== 0) {
-          value += 1;
+          value += 2;
         }
         return obj.name === 'paintings' ? `${value * 4} cuts` : `${value} clicks`;
       })();
