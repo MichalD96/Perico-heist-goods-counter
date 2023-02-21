@@ -44,7 +44,7 @@ const Counter = {
     const players = Settings.amountOfPlayers;
 
     Counter.secondaryTargetsOrder.forEach(element => {
-      if (emptySpace < 0.05) return;
+      if (emptySpace < 0.1) return;
       emptySpace = players - bagsFill;
       const obj = Counter.targetsData.targets.secondary.find(object => object.name === element.name);
       if (!Settings.goldAlone && +players === 1 && obj.name === 'gold') return;
@@ -61,11 +61,11 @@ const Counter = {
       let realFill = maxFill >= players ? players : maxFill;
       bagsFill += +realFill;
       realFill = realFill > emptySpace ? emptySpace : realFill;
-      if (realFill < 0.025) return;
+      if (realFill < 0.1) return;
       const clicks = (() => {
-        const rest = Number((realFill / obj.weight - Math.trunc(realFill / obj.weight)).toFixed(3));
-        let value = Math.trunc(realFill / obj.weight) * obj.pickup_steps.length + findClosestValue(rest % 1 * 100, obj.pickup_steps);
-        if (['cash', 'weed', 'coke'].includes(obj.name) && value % 10 !== 0) {
+        const rest = Number((realFill / obj.weight - Math.floor(realFill / obj.weight)).toFixed(3));
+        let value = Math.floor(realFill / obj.weight) * obj.pickup_steps.length + findClosestValue(rest % 1 * 100, obj.pickup_steps);
+        if (value % 10 !== 0 && ['cocaine', 'cash'].includes(obj.name)) {
           value += 1;
         }
         return obj.name === 'paintings' ? `${value * 4} cuts` : `${value} clicks`;
@@ -130,15 +130,15 @@ const Counter = {
   },
   activateHandlers: function() {
     document.querySelector('#isHardMode').addEventListener('change', () => {
-      Settings.isHardMode = JSON.parse(isHardMode.value); // bool
+      Settings.isHardMode = JSON.parse(isHardMode.value); // boolean
     });
 
     document.querySelector('#isWithinCooldown').addEventListener('change', () => {
-      Settings.isWithinCooldown = JSON.parse(isWithinCooldown.value); // bool
+      Settings.isWithinCooldown = JSON.parse(isWithinCooldown.value); // boolean
     });
 
     document.querySelector('#goldAlone').addEventListener('change', () => {
-      Settings.goldAlone = JSON.parse(goldAlone.value); // bool
+      Settings.goldAlone = JSON.parse(goldAlone.value); // boolean
     });
 
     document.querySelector('#primaryTarget').addEventListener('change', () => {
@@ -190,15 +190,11 @@ const Counter = {
 
 const findError = callback => (...args) => callback(args).catch(console.log);
 
-function initLogic() {
-  Counter.init()
-    .then(Counter.activateHandlers)
-    .then(Loader.resolveContentLoaded);
-}
-
 document.addEventListener('DOMContentLoaded', () => {
   try {
-    initLogic();
+    Counter.init()
+      .then(Counter.activateHandlers)
+      .then(Loader.resolveContentLoaded);
   } catch (error) {
     console.log(error);
     alert(error);
