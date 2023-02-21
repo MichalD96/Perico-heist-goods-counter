@@ -65,7 +65,7 @@ const Counter = {
       const clicks = (() => {
         const rest = Number((realFill / obj.weight - Math.floor(realFill / obj.weight)).toFixed(3));
         let value = Math.floor(realFill / obj.weight) * obj.pickup_steps.length + findClosestValue(rest % 1 * 100, obj.pickup_steps);
-        if (value % 10 !== 0 && ['cocaine', 'cash'].includes(obj.name)) {
+        if (value % 10 !== 0 && (['cocaine', 'cash'].includes(obj.name) || ['weed'].includes(obj.name) && players > 1)) {
           value += 1;
         }
         return obj.name === 'paintings' ? `${value * 4} cuts` : `${value} clicks`;
