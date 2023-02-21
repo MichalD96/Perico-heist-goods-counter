@@ -1,11 +1,11 @@
 {
   "targets": {
     "primary": [
-      { "name": "tequila", "value": { "standard": 900000, "hard": 990000 }, "withinCooldownSecondaryBonus": 1.2 },
-      { "name": "ruby_necklace", "value": { "standard": 1000000, "hard": 1100000 }, "withinCooldownSecondaryBonus": 1.1 },
-      { "name": "bearer_bonds", "value": { "standard": 1100000, "hard": 1210000 }, "withinCooldownSecondaryBonus": 1.05 },
-      { "name": "pink_diamond", "value": { "standard": 1300000, "hard": 1430000 }, "withinCooldownSecondaryBonus": 1 },
-      { "name": "panther_statue", "value": { "standard": 1900000, "hard": 2090000 }, "withinCooldownSecondaryBonus": 1 }
+      { "name": "tequila", "value": { "standard": 900000, "hard": 990000 }, "bonus_multiplier": 1.2 },
+      { "name": "ruby_necklace", "value": { "standard": 1000000, "hard": 1100000 }, "bonus_multiplier": 1.1 },
+      { "name": "bearer_bonds", "value": { "standard": 1100000, "hard": 1210000 }, "bonus_multiplier": 1.05 },
+      { "name": "pink_diamond", "value": { "standard": 1300000, "hard": 1430000 }, "bonus_multiplier": 1 },
+      { "name": "panther_statue", "value": { "standard": 1900000, "hard": 2090000 }, "bonus_multiplier": 1 }
     ],
     "secondary": [
       {

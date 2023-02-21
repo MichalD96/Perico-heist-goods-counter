@@ -40,7 +40,7 @@ const Counter = {
     let totalValue = 0;
     const isHardMode = Settings.isHardMode ? 'hard' : 'standard';
     const withinCooldownSecondaryBonus = Settings.isWithinCooldown ?
-      Counter.targetsData.targets.primary.find(({ name }) => name === Settings.primaryTarget).withinCooldownSecondaryBonus : 1;
+      Counter.targetsData.targets.primary.find(({ name }) => name === Settings.primaryTarget).bonus_multiplier : 1;
     const players = Settings.amountOfPlayers;
 
     Counter.secondaryTargetsOrder.forEach(element => {
