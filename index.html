@@ -11,23 +11,21 @@
   <link rel="mask-icon" href="./safari-pinned-tab.svg" color="#5bbad5">
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff">
-  <title>Cayo Perico Heist Loot Value Counter</title>
-  <link rel="stylesheet" href="css/style.css?nocache=1009" />
+  <title>Cayo Perico Heist Loot Value Counter V2</title>
+  <link rel="stylesheet" href="css/style.css?nocache=1011" />
 
   <script>
-    const nocache = 1010;
+    const nocache = 1011;
   </script>
 </head>
 
 <body>
   <div class="credentials">
     <h3>Created by: <a href="https://github.com/MichalD96" target="_blank">Michal__d</a></h3>
-    <h5>Site build in progress ;)</h5>
-    <h5>Report all issues <a target="_blank" href="https://github.com/MichalD96/Perico-heist-goods-counter/issues/">Here (GitHub)</a></h5>
+    <h5>Issues &amp; Feedback <a target="_blank" href="https://github.com/MichalD96/Perico-heist-goods-counter/issues/">GitHub</a></h5>
     <h5>Support the project <a target="_blank" href="https://www.paypal.com/paypalme/Michald96">Here (PayPal)</a></h5>
   </div>
   <div class="flex">
-
     <div class="main-container">
       <div class="custom-input">
         <label for="isHardMode">Hard mode:</label>
@@ -136,6 +134,7 @@
     </div>
 
     <div class="main-container right">
+      <div style="color:red; margin-bottom: 10px;">This is calculator version 2. Should be more accurate than first version, but still may have some inaccuracies due to game randomness and rounding!</div>
       <div class="dimmed">+ Office safe: <span id="office-safe"></span></div>
       <div class="dimmed">- Fencing fee (10%): <span id="fencing-fee"></span></div>
       <div class="dimmed">- Pavel fee (2%): <span id="pavel-fee"></span></div>
@@ -173,21 +172,20 @@
       <div class="hidden"><span class="big" id="cash-bag">0</span></div>
       <br>
       <hr>
-      <div>Bags sum: <span id="bags_fill"></span>**</div>
+      <div>Bags sum: <span id="bags_fill"></span></div>
       <div class="flex-buttons">
         <button id="reset-settings" class="button">Reset settings to default</button>
         <button id="link-settings" class="button">Copy link with settings</button>
       </div>
       <div class="properties">
         <p>* - not included to current final value</p>
-        <p>** - value over amount of players is not a bug, in some specific cases you can pick up more than your bags capacity</p>
       </div>
     </div>
   </div>
 
-  <script src="js/loader.js?nocache=1009"></script>
-  <script src="js/settings.js?nocache=1009"></script>
-  <script src="js/logic.js?nocache=1009"></script>
+  <script src="js/loader.js?nocache=1011"></script>
+  <script src="js/settings.js?nocache=1011"></script>
+  <script src="js/logic.js?nocache=1011"></script>
 </body>
 
 </html>

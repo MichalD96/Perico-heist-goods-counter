@@ -1,4 +1,5 @@
 {
+  "bag_capacity": 1800,
   "targets": {
     "primary": [
       { "name": "tequila", "value": { "standard": 630000, "hard": 690000 }, "bonus_multiplier": 1.2 },
@@ -11,37 +12,32 @@
       {
         "name": "gold",
         "value": { "min": 328333, "max": 333333 },
-        "weight": 0.6666,
-        "pickup_steps": [8.333, 25, 33.333, 50, 66.666, 83.333, 100],
-        "bag_capacity_steps": [5.556, 16.667, 22.222, 33.333, 44.444, 55.556, 66.66]
+        "full_table_units": 1200,
+        "pickup_units": [100, 300, 400, 600, 800, 1000, 1200]
       },
       {
         "name": "cocaine",
         "value": { "min": 198000, "max": 202500 },
-        "weight": 0.5,
-        "pickup_steps": [11.111, 22.222, 31.111, 37.778, 42.222, 51.111, 64.444, 77.778, 95.556, 100],
-        "bag_capacity_steps": [5.556, 11.111, 15.556, 18.889, 21.111, 25.556, 32.222, 38.889, 47.778, 50]
-      },
-      {
-        "name": "paintings",
-        "value": { "min": 157500, "max": 180000 },
-        "weight": 0.5,
-        "pickup_steps": [100],
-        "bag_capacity_steps": [50]
+        "full_table_units": 900,
+        "pickup_units": [100, 200, 280, 340, 380, 460, 580, 700, 860, 900]
       },
       {
         "name": "weed",
         "value": { "min": 130500, "max": 135000 },
-        "weight": 0.375,
-        "pickup_steps": [11.111, 22.222, 31.111, 37.778, 42.222, 51.111, 64.444, 77.778, 95.556, 100],
-        "bag_capacity_steps": [4.167, 11.111, 8.333, 11.667, 14.167, 15.833, 19.167, 24.167, 29.167, 35.833, 37.5]
+        "full_table_units": 675,
+        "pickup_units": [75, 150, 210, 255, 285, 345, 435, 525, 645, 675]
+      },
+      {
+        "name": "paintings",
+        "value": { "min": 157500, "max": 180000 },
+        "full_table_units": 900,
+        "pickup_units": [900]
       },
       {
         "name": "cash",
         "value": { "min": 78750, "max": 83250 },
-        "weight": 0.25,
-        "pickup_steps": [11.111, 22.222, 31.111, 37.778, 42.222, 51.111, 64.444, 77.778, 95.556, 100],
-        "bag_capacity_steps": [2.778, 5.556, 7.778, 9.444, 10.556, 12.778, 16.111, 19.444, 23.889, 25]
+        "full_table_units": 450,
+        "pickup_units": [50, 100, 140, 170, 190, 230, 290, 350, 430, 450]
       }
     ],
     "office_safe": { "min": 20000, "max": 99000 }
