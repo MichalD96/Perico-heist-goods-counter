@@ -1,4 +1,6 @@
 let BAG_CAPACITY = 1800;
+const VALUE_PRIORITY = ['gold', 'cocaine', 'paintings', 'weed', 'cash'];
+const PICKUP_ORDER = ['cash', 'weed', 'cocaine', 'paintings', 'gold'];
 
 const htmlElements = {
   gold: document.querySelector('#gold'),
@@ -46,7 +48,7 @@ function getTargetData(targetType) {
   };
 }
 
-function calculateLootForTarget(targetType, availableTables, remainingCapacity) {
+function calculateLootForTarget(targetType, availableTables, remainingCapacity, allowOverfill = false) {
   if (remainingCapacity <= 0 || availableTables <= 0) {
     return { units: 0, presses: 0, tablesUsed: 0 };
   }
@@ -65,12 +67,18 @@ function calculateLootForTarget(targetType, availableTables, remainingCapacity) 
         totalPresses += 1;
         tablesUsed++;
         capacityLeft -= fullTableUnits;
+      } else if (allowOverfill && capacityLeft > 0) {
+        totalUnits += capacityLeft;
+        totalPresses += 1;
+        tablesUsed++;
+        capacityLeft = 0;
       } else {
         break;
       }
     } else {
       let unitsFromThisTable = 0;
       let pressesForThisTable = 0;
+      let lastPressOverfill = 0;
 
       for (let p = 0; p < pickupUnits.length; p++) {
         const cumulativeUnits = pickupUnits[p];
@@ -78,26 +86,28 @@ function calculateLootForTarget(targetType, availableTables, remainingCapacity) 
           unitsFromThisTable = cumulativeUnits;
           pressesForThisTable = p + 1;
         } else {
+          if (allowOverfill && p === pressesForThisTable) {
+            lastPressOverfill = cumulativeUnits;
+          }
           break;
         }
       }
 
       if (unitsFromThisTable > 0) {
-        const nextPressUnits = pickupUnits[pressesForThisTable] || null;
-        if (nextPressUnits !== null) {
-          const currentBagFill = unitsFromThisTable;
-          if (currentBagFill === capacityLeft || capacityLeft - unitsFromThisTable < pickupUnits[0]) {
-            unitsFromThisTable = capacityLeft;
-          }
-        }
-
         totalUnits += unitsFromThisTable;
         totalPresses += pressesForThisTable;
         tablesUsed++;
         capacityLeft -= unitsFromThisTable;
-      } else {
-        if (capacityLeft > 0 && capacityLeft < pickupUnits[0]) {
+      }
+
+      if (capacityLeft > 0 && allowOverfill && lastPressOverfill > 0) {
+        totalUnits += capacityLeft;
+        totalPresses += 1;
+        capacityLeft = 0;
+      } else if (unitsFromThisTable === 0) {
+        if (allowOverfill && capacityLeft > 0 && capacityLeft < pickupUnits[0]) {
           totalUnits += capacityLeft;
+          totalPresses += 1;
           capacityLeft = 0;
         }
         break;
@@ -119,8 +129,9 @@ function calculateLoot() {
   const results = [];
   let totalSecondaryValue = 0;
 
-  for (const targetType of targetsData.targets.secondary.map(({ name }) => name)) {
+  for (const targetType of VALUE_PRIORITY) {
     if (remainingCapacity <= 0) break;
+    if (targetType === 'cash') continue; // Handle cash separately at the end
 
     const availableTables = Settings[targetType] || 0;
     if (availableTables <= 0) continue;
@@ -130,7 +141,7 @@ function calculateLoot() {
     const targetData = getTargetData(targetType);
     if (targetType === 'paintings' && remainingCapacity < targetData.fullTableUnits) continue;
 
-    const lootResult = calculateLootForTarget(targetType, availableTables, remainingCapacity);
+    const lootResult = calculateLootForTarget(targetType, availableTables, remainingCapacity, true);
 
     if (lootResult.units > 0) {
       const bagsFilled = lootResult.units / BAG_CAPACITY;
@@ -147,6 +158,31 @@ function calculateLoot() {
 
       totalSecondaryValue += valueCollected;
       remainingCapacity -= lootResult.units;
+    }
+  }
+
+  if (remainingCapacity > 0) {
+    const cashAvailable = Settings['cash'] || 0;
+    if (cashAvailable > 0) {
+      const targetData = getTargetData('cash');
+      const lootResult = calculateLootForTarget('cash', cashAvailable, remainingCapacity, true);
+
+      if (lootResult.units > 0) {
+        const bagsFilled = lootResult.units / BAG_CAPACITY;
+        const avgValue = getAverage(targetData.minValue, targetData.maxValue);
+        const valueCollected = lootResult.units / targetData.fullTableUnits * avgValue * withinCooldownBonus;
+
+        results.push({
+          name: 'cash',
+          units: lootResult.units,
+          bags: bagsFilled,
+          presses: lootResult.presses,
+          value: valueCollected,
+        });
+
+        totalSecondaryValue += valueCollected;
+        remainingCapacity -= lootResult.units;
+      }
     }
   }
 
@@ -175,19 +211,17 @@ function updateDisplay(results, secondaryValue, primaryValue, withinCooldownBonu
     e.parentElement.classList.add('hidden');
   });
 
-  targetsData.targets.secondary
-    .map(({ name }) => name)
-    .forEach((targetType) => {
-      const data = getTargetData(targetType);
-      const avgValue = getAverage(data.minValue, data.maxValue) * withinCooldownBonus;
-      document.querySelector(`#${targetType}-stacks-value`).innerText = '$' + Math.round(avgValue).toLocaleString();
+  VALUE_PRIORITY.forEach((targetType) => {
+    const data = getTargetData(targetType);
+    const avgValue = getAverage(data.minValue, data.maxValue) * withinCooldownBonus;
+    document.querySelector(`#${targetType}-stacks-value`).innerText = '$' + Math.round(avgValue).toLocaleString();
 
-      const valuePerBagUnit = avgValue / data.fullTableUnits * BAG_CAPACITY;
-      document.querySelector(`#${targetType}-bags-value`).innerText = '$' + Math.round(valuePerBagUnit).toLocaleString();
+    const valuePerBagUnit = avgValue / data.fullTableUnits * BAG_CAPACITY;
+    document.querySelector(`#${targetType}-bags-value`).innerText = '$' + Math.round(valuePerBagUnit).toLocaleString();
 
-      const bagPercent = (data.fullTableUnits / BAG_CAPACITY * 100).toFixed(2);
-      document.querySelector(`#${targetType}-bag-percent`).innerText = bagPercent + '%';
-    });
+    const bagPercent = (data.fullTableUnits / BAG_CAPACITY * 100).toFixed(2);
+    document.querySelector(`#${targetType}-bag-percent`).innerText = bagPercent + '%';
+  });
 
   const inputs = document.querySelectorAll('.cuts input');
   [...inputs].forEach((element) => {
