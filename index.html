@@ -20,6 +20,20 @@
 </head>
 
 <body>
+  <!-- First-time visitor popup -->
+  <div id="disclaimer-popup" class="popup-overlay">
+    <div class="popup-content">
+      <h3>Important Notice</h3>
+      <p>This is calculator version 2. Should be more accurate than first version, but still may have some inaccuracies due to game randomness and rounding!</p>
+      <p style="color: #dfdfdf;">Pickup order and mixing targets in the bags also matters! Not every click is equal. Sometimes you pickup 2 bricks of coke, and sometimes swipe half of the table!</p>
+      <p style="color: #dfdfdf;">All of this variables makes this calculator inaccurate by +- 1 click</p>
+      <label class="popup-checkbox">
+        <input type="checkbox" id="dont-show-again"> Do not show again
+      </label>
+      <button id="popup-close" class="button popup-button">Got it!</button>
+    </div>
+  </div>
+
   <div class="credentials">
     <h3>Created by: <a href="https://github.com/MichalD96" target="_blank">Michal__d</a></h3>
     <h5>Issues &amp; Feedback <a target="_blank" href="https://github.com/MichalD96/Perico-heist-goods-counter/issues/">GitHub</a></h5>
@@ -134,7 +148,6 @@
     </div>
 
     <div class="main-container right">
-      <div style="color:red; margin-bottom: 10px;">This is calculator version 2. Should be more accurate than first version, but still may have some inaccuracies due to game randomness and rounding!</div>
       <div class="dimmed">+ Office safe: <span id="office-safe"></span></div>
       <div class="dimmed">- Fencing fee (10%): <span id="fencing-fee"></span></div>
       <div class="dimmed">- Pavel fee (2%): <span id="pavel-fee"></span></div>
@@ -186,6 +199,33 @@
   <script src="js/loader.js?nocache=1011"></script>
   <script src="js/settings.js?nocache=1011"></script>
   <script src="js/logic.js?nocache=1011"></script>
+  <script>
+    (function() {
+      const popup = document.getElementById('disclaimer-popup');
+      const closeBtn = document.getElementById('popup-close');
+      const dontShowCheckbox = document.getElementById('dont-show-again');
+      
+      if (!localStorage.getItem('disclaimerShown')) {
+        popup.style.display = 'flex';
+      }
+      
+      closeBtn.addEventListener('click', function() {
+        popup.style.display = 'none';
+        if (dontShowCheckbox.checked) {
+          localStorage.setItem('disclaimerShown', 'true');
+        }
+      });
+      
+      popup.addEventListener('click', function(e) {
+        if (e.target === popup) {
+          popup.style.display = 'none';
+          if (dontShowCheckbox.checked) {
+            localStorage.setItem('disclaimerShown', 'true');
+          }
+        }
+      });
+    })();
+  </script>
 </body>
 
 </html>
