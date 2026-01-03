@@ -1,5 +1,5 @@
 let BAG_CAPACITY = 1800;
-const VALUE_PRIORITY = ['gold', 'cocaine', 'paintings', 'weed', 'cash'];
+const VALUE_PRIORITY = ['gold', 'cocaine', 'weed', 'paintings', 'cash'];
 const PICKUP_ORDER = ['cash', 'weed', 'cocaine', 'paintings', 'gold'];
 
 const htmlElements = {
@@ -141,7 +141,8 @@ function calculateLoot() {
     const targetData = getTargetData(targetType);
     if (targetType === 'paintings' && remainingCapacity < targetData.fullTableUnits) continue;
 
-    const lootResult = calculateLootForTarget(targetType, availableTables, remainingCapacity, true);
+    const allowOverfill = targetType !== 'paintings';
+    const lootResult = calculateLootForTarget(targetType, availableTables, remainingCapacity, allowOverfill);
 
     if (lootResult.units > 0) {
       const bagsFilled = lootResult.units / BAG_CAPACITY;
